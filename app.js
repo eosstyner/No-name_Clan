@@ -217,9 +217,11 @@ function initializeApp() {
   // 이벤트 리스너 등록
   registerEventListeners();
 
-  // 대시보드 및 테이블 렌더링
+  // 대시보드 및 테이블 렌더링 (로컬 캐시 우선 로드)
   updateAppView();
-  showToast('길드원 데이터를 정상적으로 불러왔습니다.', 'success');
+  
+  // 실시간 클라우드 DB 연결
+  initFirebase();
 }
 
 // 테마 변경 기능
@@ -259,12 +261,92 @@ function setMode(modeName) {
 }
 
 // 로컬스토리지에 현재 상태 저장
+let db;
+let unsubscribeGMS = null;
+let isFirebaseInitialized = false;
+
+// 파이어베이스 초기화 및 실시간 동기화 바인딩
+function initFirebase() {
+  const firebaseConfig = {
+    apiKey: "AIzaSyDIt2Z-5JkGCwkyvmph3bHk2ezMiG4qIEA",
+    authDomain: "no-name-clan.firebaseapp.com",
+    projectId: "no-name-clan",
+    storageBucket: "no-name-clan.firebasestorage.app",
+    messagingSenderId: "425211864003",
+    appId: "1:425211864003:web:92768a4795f38b01cd5376"
+  };
+
+  try {
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.firestore();
+    isFirebaseInitialized = true;
+    console.log("Firebase가 성공적으로 초기화되었습니다.");
+
+    // Firestore 실시간 리스너 바인딩
+    unsubscribeGMS = db.collection('gms_data').doc('state').onSnapshot((doc) => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const forceReset = urlParams.get('reset') === 'true';
+
+      if (doc.exists && !forceReset) {
+        const data = doc.data();
+        if (data.members) {
+          members = data.members;
+          localStorage.setItem('no_name_clan_members', JSON.stringify(members));
+        }
+        if (data.departedMembers) {
+          departedMembers = data.departedMembers;
+          localStorage.setItem('no_name_clan_departed', JSON.stringify(departedMembers));
+        }
+        updateAppView();
+        console.log("실시간 데이터 동기화 완료!");
+      } else {
+        // DB가 비어있거나 강제 리셋이 감지된 경우
+        console.log("클라우드 DB 데이터를 초기화 파일 데이터로 강제 리셋합니다.");
+        members = [...initialMembers];
+        departedMembers = [...initialDepartedMembers];
+        
+        // 로컬 스토리지에 먼저 덮어쓰고 서버에 업로드
+        localStorage.setItem('no_name_clan_members', JSON.stringify(members));
+        localStorage.setItem('no_name_clan_departed', JSON.stringify(departedMembers));
+        saveToFirebase(members, departedMembers);
+        
+        // 무한 루프 리셋을 방지하기 위해 URL의 ?reset=true 파라미터를 브라우저 주소창에서 깔끔하게 제거
+        if (forceReset) {
+          const cleanUri = window.location.protocol + "//" + window.location.host + window.location.pathname;
+          window.history.replaceState({}, document.title, cleanUri);
+          showToast('데이터베이스가 최신 교정된 초기 데이터로 성공적으로 초기화되었습니다!', 'success');
+        }
+      }
+    }, (error) => {
+      console.error("Firebase 실시간 동기화 오류 (인증/권한 확인 요망):", error);
+      showToast('Firebase 동기화 실패. 콘솔 규칙 설정을 확인해 주세요.', 'danger');
+    });
+  } catch (e) {
+    console.error("Firebase 초기화 중 에러가 발생했습니다.", e);
+  }
+}
+
+function saveToFirebase(newMembers, newDeparted) {
+  if (!isFirebaseInitialized || !db) return;
+  db.collection('gms_data').doc('state').set({
+    members: newMembers,
+    departedMembers: newDeparted,
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+  }).then(() => {
+    console.log("클라우드 DB 업로드 완료!");
+  }).catch((error) => {
+    console.error("클라우드 DB 업로드 실패:", error);
+  });
+}
+
 function saveToLocalStorage() {
   localStorage.setItem('no_name_clan_members', JSON.stringify(members));
+  saveToFirebase(members, departedMembers);
 }
 
 function saveDepartedToLocalStorage() {
   localStorage.setItem('no_name_clan_departed', JSON.stringify(departedMembers));
+  saveToFirebase(members, departedMembers);
 }
 
 // 2. 대시보드 통계 계산 및 화면 업데이트

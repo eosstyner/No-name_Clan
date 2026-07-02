@@ -14,7 +14,7 @@ const initialMembers = [
     "inDiscord": true,
     "isSpecial": false,
     "warning": false,
-    "notes": ""
+    "notes": "운영진"
   },
   {
     "id": "staff_심쏠#3580",
@@ -30,7 +30,7 @@ const initialMembers = [
     "inDiscord": true,
     "isSpecial": false,
     "warning": false,
-    "notes": ""
+    "notes": "운영진"
   },
   {
     "id": "staff_ericmotion#1188",
@@ -46,7 +46,7 @@ const initialMembers = [
     "inDiscord": true,
     "isSpecial": false,
     "warning": false,
-    "notes": ""
+    "notes": "클랜장"
   },
   {
     "id": "staff_lastmhc#3740",
@@ -62,7 +62,7 @@ const initialMembers = [
     "inDiscord": true,
     "isSpecial": false,
     "warning": false,
-    "notes": ""
+    "notes": "부클랜장"
   },
   {
     "id": "staff_마라탕에꿔바로우#3981",
@@ -78,7 +78,7 @@ const initialMembers = [
     "inDiscord": true,
     "isSpecial": false,
     "warning": false,
-    "notes": ""
+    "notes": "운영진"
   },
   {
     "id": "staff_예지#3270",
@@ -94,7 +94,7 @@ const initialMembers = [
     "inDiscord": true,
     "isSpecial": false,
     "warning": false,
-    "notes": ""
+    "notes": "운영진"
   },
   {
     "id": "staff_HangangPig#3487",
@@ -110,7 +110,7 @@ const initialMembers = [
     "inDiscord": true,
     "isSpecial": false,
     "warning": false,
-    "notes": ""
+    "notes": "운영진"
   },
   {
     "id": "new_TopDeck#31392",
@@ -122,8 +122,8 @@ const initialMembers = [
     "joinDate": "26. 07. 02",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -140,7 +140,7 @@ const initialMembers = [
     "inClan": true,
     "inKakao": true,
     "inDiscord": true,
-    "isSpecial": false,
+    "isSpecial": true,
     "warning": false,
     "notes": ""
   },
@@ -154,8 +154,8 @@ const initialMembers = [
     "joinDate": "23. 05. 23",
     "chatCount": 79,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -170,8 +170,8 @@ const initialMembers = [
     "joinDate": "23. 05. 31",
     "chatCount": 3,
     "inClan": false,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -186,8 +186,8 @@ const initialMembers = [
     "joinDate": "23. 05. 31",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -204,7 +204,7 @@ const initialMembers = [
     "inClan": true,
     "inKakao": true,
     "inDiscord": true,
-    "isSpecial": false,
+    "isSpecial": true,
     "warning": false,
     "notes": ""
   },
@@ -218,8 +218,8 @@ const initialMembers = [
     "joinDate": "23. 06. 17",
     "chatCount": 7,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -234,8 +234,8 @@ const initialMembers = [
     "joinDate": "23. 06. 23",
     "chatCount": 1,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -250,8 +250,8 @@ const initialMembers = [
     "joinDate": "23. 06. 25",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -266,8 +266,8 @@ const initialMembers = [
     "joinDate": "23. 07. 20",
     "chatCount": 6,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -282,8 +282,8 @@ const initialMembers = [
     "joinDate": "23. 07. 20",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -298,8 +298,8 @@ const initialMembers = [
     "joinDate": "23. 08. 05",
     "chatCount": 8,
     "inClan": false,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -314,8 +314,8 @@ const initialMembers = [
     "joinDate": "23. 08. 27",
     "chatCount": 113,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -330,8 +330,8 @@ const initialMembers = [
     "joinDate": "23. 10. 11",
     "chatCount": 1,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -346,8 +346,8 @@ const initialMembers = [
     "joinDate": "23. 10. 14",
     "chatCount": 21,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -362,11 +362,11 @@ const initialMembers = [
     "joinDate": "23. 10. 15",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
-    "notes": ""
+    "notes": "부뚜막/ericmotion#1188 지인"
   },
   {
     "id": "member_루로우니#31924",
@@ -378,8 +378,8 @@ const initialMembers = [
     "joinDate": "23. 10. 19",
     "chatCount": 7,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -394,8 +394,8 @@ const initialMembers = [
     "joinDate": "23. 10. 24",
     "chatCount": 18,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -410,11 +410,11 @@ const initialMembers = [
     "joinDate": "23. 10. 27",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
-    "notes": ""
+    "notes": "denvermint#3762님 지인"
   },
   {
     "id": "member_백련#3724",
@@ -426,8 +426,8 @@ const initialMembers = [
     "joinDate": "23. 10. 27",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -442,11 +442,11 @@ const initialMembers = [
     "joinDate": "23. 10. 27",
     "chatCount": 21,
     "inClan": false,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
-    "notes": ""
+    "notes": "신비주의#3248님 지인"
   },
   {
     "id": "member_패왕색패기123#3208",
@@ -460,7 +460,7 @@ const initialMembers = [
     "inClan": true,
     "inKakao": true,
     "inDiscord": true,
-    "isSpecial": false,
+    "isSpecial": true,
     "warning": false,
     "notes": ""
   },
@@ -474,8 +474,8 @@ const initialMembers = [
     "joinDate": "24. 01. 23",
     "chatCount": 2,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -492,7 +492,7 @@ const initialMembers = [
     "inClan": true,
     "inKakao": true,
     "inDiscord": true,
-    "isSpecial": false,
+    "isSpecial": true,
     "warning": false,
     "notes": ""
   },
@@ -506,11 +506,11 @@ const initialMembers = [
     "joinDate": "24. 03. 06",
     "chatCount": 1,
     "inClan": true,
-    "inKakao": true,
-    "inDiscord": false,
-    "isSpecial": false,
+    "inKakao": false,
+    "inDiscord": true,
+    "isSpecial": true,
     "warning": false,
-    "notes": ""
+    "notes": "단톡 사용 잘 안하심 접속률 클랜에서 최고"
   },
   {
     "id": "member_정직한호랑이#3208",
@@ -522,8 +522,8 @@ const initialMembers = [
     "joinDate": "24. 03. 26",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -538,8 +538,8 @@ const initialMembers = [
     "joinDate": "24. 04. 05",
     "chatCount": 17,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -554,8 +554,8 @@ const initialMembers = [
     "joinDate": "24. 04. 06",
     "chatCount": 2,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -572,7 +572,7 @@ const initialMembers = [
     "inClan": false,
     "inKakao": true,
     "inDiscord": true,
-    "isSpecial": false,
+    "isSpecial": true,
     "warning": false,
     "notes": ""
   },
@@ -586,8 +586,8 @@ const initialMembers = [
     "joinDate": "24. 04. 12",
     "chatCount": 5,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -602,8 +602,8 @@ const initialMembers = [
     "joinDate": "24. 04. 22",
     "chatCount": 28,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -620,7 +620,7 @@ const initialMembers = [
     "inClan": true,
     "inKakao": true,
     "inDiscord": true,
-    "isSpecial": false,
+    "isSpecial": true,
     "warning": false,
     "notes": ""
   },
@@ -636,7 +636,7 @@ const initialMembers = [
     "inClan": true,
     "inKakao": true,
     "inDiscord": true,
-    "isSpecial": false,
+    "isSpecial": true,
     "warning": false,
     "notes": ""
   },
@@ -650,8 +650,8 @@ const initialMembers = [
     "joinDate": "24. 05. 31",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -666,8 +666,8 @@ const initialMembers = [
     "joinDate": "24. 06. 05",
     "chatCount": 3,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -682,8 +682,8 @@ const initialMembers = [
     "joinDate": "24. 06. 05",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -700,9 +700,9 @@ const initialMembers = [
     "inClan": true,
     "inKakao": true,
     "inDiscord": true,
-    "isSpecial": false,
+    "isSpecial": true,
     "warning": false,
-    "notes": ""
+    "notes": "따띠뚜#31812님 지인"
   },
   {
     "id": "member_minhowow#11711",
@@ -714,8 +714,8 @@ const initialMembers = [
     "joinDate": "24. 06. 19",
     "chatCount": 2,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -730,8 +730,8 @@ const initialMembers = [
     "joinDate": "24. 08. 21",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -746,8 +746,8 @@ const initialMembers = [
     "joinDate": "24. 09. 21",
     "chatCount": 7,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -762,8 +762,8 @@ const initialMembers = [
     "joinDate": "24. 10. 30",
     "chatCount": 26,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -778,8 +778,8 @@ const initialMembers = [
     "joinDate": "24. 11. 29",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -794,8 +794,8 @@ const initialMembers = [
     "joinDate": "24. 12. 10",
     "chatCount": 12,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -812,7 +812,7 @@ const initialMembers = [
     "inClan": false,
     "inKakao": true,
     "inDiscord": true,
-    "isSpecial": false,
+    "isSpecial": true,
     "warning": false,
     "notes": ""
   },
@@ -826,8 +826,8 @@ const initialMembers = [
     "joinDate": "24. 12. 18",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -844,7 +844,7 @@ const initialMembers = [
     "inClan": true,
     "inKakao": true,
     "inDiscord": true,
-    "isSpecial": false,
+    "isSpecial": true,
     "warning": false,
     "notes": ""
   },
@@ -858,8 +858,8 @@ const initialMembers = [
     "joinDate": "24. 12. 22",
     "chatCount": 4,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -874,8 +874,8 @@ const initialMembers = [
     "joinDate": "25. 01. 23",
     "chatCount": 42,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -890,8 +890,8 @@ const initialMembers = [
     "joinDate": "25. 01. 24",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -906,8 +906,8 @@ const initialMembers = [
     "joinDate": "25. 01. 30",
     "chatCount": 179,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -922,8 +922,8 @@ const initialMembers = [
     "joinDate": "25. 02. 02",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -938,8 +938,8 @@ const initialMembers = [
     "joinDate": "25. 04. 24",
     "chatCount": 1,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -954,11 +954,11 @@ const initialMembers = [
     "joinDate": "25. 04. 28",
     "chatCount": 2,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
-    "notes": ""
+    "notes": "복귀유저"
   },
   {
     "id": "member_ALLBlacks#11259",
@@ -970,11 +970,11 @@ const initialMembers = [
     "joinDate": "25. 05. 07",
     "chatCount": 2112,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
-    "notes": ""
+    "notes": "닉변 미친마법사->allblacks"
   },
   {
     "id": "member_눈물패밀리#3118",
@@ -986,8 +986,8 @@ const initialMembers = [
     "joinDate": "25. 05. 08",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1002,8 +1002,8 @@ const initialMembers = [
     "joinDate": "25. 05. 21",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1018,8 +1018,8 @@ const initialMembers = [
     "joinDate": "25. 06. 01",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1034,11 +1034,11 @@ const initialMembers = [
     "joinDate": "25. 07. 26",
     "chatCount": 8,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
-    "notes": ""
+    "notes": "Egg#32475님 지인"
   },
   {
     "id": "member_청류가인#3929",
@@ -1050,11 +1050,11 @@ const initialMembers = [
     "joinDate": "25. 08. 03",
     "chatCount": 362,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
-    "notes": ""
+    "notes": "처음처럼#32774님 지인"
   },
   {
     "id": "member_개미#32730",
@@ -1066,8 +1066,8 @@ const initialMembers = [
     "joinDate": "25. 09. 20",
     "chatCount": 1,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1082,8 +1082,8 @@ const initialMembers = [
     "joinDate": "25. 09. 25",
     "chatCount": 20,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1098,11 +1098,11 @@ const initialMembers = [
     "joinDate": "25. 09. 28",
     "chatCount": 24,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
-    "notes": ""
+    "notes": "마크튭 지인"
   },
   {
     "id": "member_커먼#3127",
@@ -1114,8 +1114,8 @@ const initialMembers = [
     "joinDate": "25. 09. 29",
     "chatCount": 350,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1130,8 +1130,8 @@ const initialMembers = [
     "joinDate": "25. 12. 02",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1146,8 +1146,8 @@ const initialMembers = [
     "joinDate": "25. 12. 07",
     "chatCount": 18,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1162,8 +1162,8 @@ const initialMembers = [
     "joinDate": "25. 12. 15",
     "chatCount": 333,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1178,11 +1178,11 @@ const initialMembers = [
     "joinDate": "25. 12. 15",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
-    "notes": ""
+    "notes": "복귀"
   },
   {
     "id": "member_Mango#3747",
@@ -1194,8 +1194,8 @@ const initialMembers = [
     "joinDate": "25. 12. 15",
     "chatCount": 4,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1210,11 +1210,11 @@ const initialMembers = [
     "joinDate": "25. 12. 15",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
-    "notes": ""
+    "notes": "복귀"
   },
   {
     "id": "member_skrety#3212",
@@ -1226,8 +1226,8 @@ const initialMembers = [
     "joinDate": "25. 12. 17",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1242,8 +1242,8 @@ const initialMembers = [
     "joinDate": "25. 12. 20",
     "chatCount": 47,
     "inClan": false,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1260,9 +1260,9 @@ const initialMembers = [
     "inClan": true,
     "inKakao": true,
     "inDiscord": true,
-    "isSpecial": false,
+    "isSpecial": true,
     "warning": false,
-    "notes": ""
+    "notes": "복귀유저"
   },
   {
     "id": "member_가브리엘#3105",
@@ -1274,8 +1274,8 @@ const initialMembers = [
     "joinDate": "25. 12. 25",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1290,8 +1290,8 @@ const initialMembers = [
     "joinDate": "26. 02. 14",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1306,8 +1306,8 @@ const initialMembers = [
     "joinDate": "26. 03. 04",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1322,8 +1322,8 @@ const initialMembers = [
     "joinDate": "26. 03. 08",
     "chatCount": 1,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1338,11 +1338,11 @@ const initialMembers = [
     "joinDate": "26. 03. 10",
     "chatCount": 1,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
-    "notes": ""
+    "notes": "커버팬티도둑,우람찬,시간과기억사이,웅이몽"
   },
   {
     "id": "member_시간과기억사이#3894",
@@ -1354,11 +1354,11 @@ const initialMembers = [
     "joinDate": "26. 03. 10",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
-    "notes": ""
+    "notes": "커버팬티도둑,우람찬,시간과기억사이,웅이몽"
   },
   {
     "id": "member_헝그리복서#31618",
@@ -1370,8 +1370,8 @@ const initialMembers = [
     "joinDate": "26. 03. 11",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1386,11 +1386,11 @@ const initialMembers = [
     "joinDate": "26. 03. 21",
     "chatCount": 58,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
-    "notes": ""
+    "notes": "나크메션 지인"
   },
   {
     "id": "member_코니#31376",
@@ -1402,11 +1402,11 @@ const initialMembers = [
     "joinDate": "26. 03. 21",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
-    "notes": ""
+    "notes": "나크메션 지인"
   },
   {
     "id": "member_옥령사/옥수수#3221",
@@ -1418,11 +1418,11 @@ const initialMembers = [
     "joinDate": "26. 03. 21",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
-    "notes": ""
+    "notes": "현서욍자지  지인"
   },
   {
     "id": "member_고양이는멍멍#31973",
@@ -1434,8 +1434,8 @@ const initialMembers = [
     "joinDate": "26. 03. 22",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1450,8 +1450,8 @@ const initialMembers = [
     "joinDate": "26. 04. 02",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1466,8 +1466,8 @@ const initialMembers = [
     "joinDate": "26. 04. 11",
     "chatCount": 4,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1482,8 +1482,8 @@ const initialMembers = [
     "joinDate": "26. 04. 12",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1498,8 +1498,8 @@ const initialMembers = [
     "joinDate": "26. 04. 20",
     "chatCount": 2,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1514,8 +1514,8 @@ const initialMembers = [
     "joinDate": "26. 04. 21",
     "chatCount": 7,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1530,8 +1530,8 @@ const initialMembers = [
     "joinDate": "26. 04. 27",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1546,8 +1546,8 @@ const initialMembers = [
     "joinDate": "26. 04. 28",
     "chatCount": 22,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1562,8 +1562,8 @@ const initialMembers = [
     "joinDate": "26. 04. 28",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1578,8 +1578,8 @@ const initialMembers = [
     "joinDate": "26. 04. 28",
     "chatCount": 3,
     "inClan": false,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1594,8 +1594,8 @@ const initialMembers = [
     "joinDate": "26. 04. 28",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1610,8 +1610,8 @@ const initialMembers = [
     "joinDate": "26. 04. 28",
     "chatCount": 24,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1626,8 +1626,8 @@ const initialMembers = [
     "joinDate": "26. 04. 28",
     "chatCount": 1,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1642,8 +1642,8 @@ const initialMembers = [
     "joinDate": "26. 04. 28",
     "chatCount": 103,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1658,8 +1658,8 @@ const initialMembers = [
     "joinDate": "26. 04. 28",
     "chatCount": 187,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1674,8 +1674,8 @@ const initialMembers = [
     "joinDate": "26. 04. 28",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1690,8 +1690,8 @@ const initialMembers = [
     "joinDate": "26. 04. 28",
     "chatCount": 22,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1706,8 +1706,8 @@ const initialMembers = [
     "joinDate": "26. 04. 28",
     "chatCount": 4,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1722,8 +1722,8 @@ const initialMembers = [
     "joinDate": "26. 04. 28",
     "chatCount": 5,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1738,8 +1738,8 @@ const initialMembers = [
     "joinDate": "26. 04. 28",
     "chatCount": 7,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1754,8 +1754,8 @@ const initialMembers = [
     "joinDate": "26. 05. 02",
     "chatCount": 12,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1770,8 +1770,8 @@ const initialMembers = [
     "joinDate": "26. 05. 02",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1786,8 +1786,8 @@ const initialMembers = [
     "joinDate": "26. 05. 02",
     "chatCount": 153,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1802,11 +1802,11 @@ const initialMembers = [
     "joinDate": "26. 05. 05",
     "chatCount": 51,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
-    "notes": ""
+    "notes": "커먼와이프"
   },
   {
     "id": "member_카토신자#3795",
@@ -1818,8 +1818,8 @@ const initialMembers = [
     "joinDate": "26. 05. 07",
     "chatCount": 673,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1834,8 +1834,8 @@ const initialMembers = [
     "joinDate": "26. 05. 07",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1850,8 +1850,8 @@ const initialMembers = [
     "joinDate": "26. 05. 08",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1866,8 +1866,8 @@ const initialMembers = [
     "joinDate": "26. 05. 08",
     "chatCount": 482,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1882,8 +1882,8 @@ const initialMembers = [
     "joinDate": "26. 05. 08",
     "chatCount": 10,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1898,11 +1898,11 @@ const initialMembers = [
     "joinDate": "26. 05. 12",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
-    "notes": ""
+    "notes": "버키님 지인"
   },
   {
     "id": "member_행복한발바닥#324990",
@@ -1914,8 +1914,8 @@ const initialMembers = [
     "joinDate": "26. 05. 20",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1930,8 +1930,8 @@ const initialMembers = [
     "joinDate": "26. 05. 29",
     "chatCount": 595,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1946,8 +1946,8 @@ const initialMembers = [
     "joinDate": "25. 12. 12",
     "chatCount": 395,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1962,8 +1962,8 @@ const initialMembers = [
     "joinDate": "26. 06. 06",
     "chatCount": 64,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1978,8 +1978,8 @@ const initialMembers = [
     "joinDate": "26. 06. 06",
     "chatCount": 33,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -1994,8 +1994,8 @@ const initialMembers = [
     "joinDate": "26. 06. 10",
     "chatCount": 7,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -2010,8 +2010,8 @@ const initialMembers = [
     "joinDate": "26. 06. 10",
     "chatCount": 6,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -2026,8 +2026,8 @@ const initialMembers = [
     "joinDate": "26. 06. 11",
     "chatCount": 4,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -2042,8 +2042,8 @@ const initialMembers = [
     "joinDate": "26. 06. 11",
     "chatCount": 26,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -2058,8 +2058,8 @@ const initialMembers = [
     "joinDate": "26. 06. 14",
     "chatCount": 7,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -2074,8 +2074,8 @@ const initialMembers = [
     "joinDate": "26. 06. 14",
     "chatCount": 4,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -2090,8 +2090,8 @@ const initialMembers = [
     "joinDate": "26. 06. 20",
     "chatCount": 5,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -2106,8 +2106,8 @@ const initialMembers = [
     "joinDate": "26. 06. 20",
     "chatCount": 5,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -2122,8 +2122,8 @@ const initialMembers = [
     "joinDate": "26. 06. 26",
     "chatCount": 29,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -2138,8 +2138,8 @@ const initialMembers = [
     "joinDate": "26. 06. 27",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -2154,8 +2154,8 @@ const initialMembers = [
     "joinDate": "26. 06. 27",
     "chatCount": 13,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -2170,8 +2170,8 @@ const initialMembers = [
     "joinDate": "26. 06. 29",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -2186,8 +2186,8 @@ const initialMembers = [
     "joinDate": "26. 06. 29",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -2202,8 +2202,8 @@ const initialMembers = [
     "joinDate": "26. 06. 30",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -2218,8 +2218,8 @@ const initialMembers = [
     "joinDate": "26. 07. 01",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -2234,8 +2234,8 @@ const initialMembers = [
     "joinDate": "26. 07. 01",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -2250,8 +2250,8 @@ const initialMembers = [
     "joinDate": "26. 07. 01",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -2266,8 +2266,8 @@ const initialMembers = [
     "joinDate": "26. 07. 01",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -2282,8 +2282,8 @@ const initialMembers = [
     "joinDate": "26. 07. 01",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -2298,8 +2298,8 @@ const initialMembers = [
     "joinDate": "26. 07. 01",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -2314,8 +2314,8 @@ const initialMembers = [
     "joinDate": "26. 07. 01",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
@@ -2330,8 +2330,8 @@ const initialMembers = [
     "joinDate": "26. 07. 02",
     "chatCount": 0,
     "inClan": true,
-    "inKakao": false,
-    "inDiscord": true,
+    "inKakao": true,
+    "inDiscord": false,
     "isSpecial": false,
     "warning": false,
     "notes": ""
