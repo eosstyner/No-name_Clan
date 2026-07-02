@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>무명 클랜 (DIABLO4 & POE2)</title>
+  <meta name="description" content="무명 길드의 길드원 및 운영진 정보를 통합 관리하고 통계를 실시간으로 제공하는 프리미엄 길드 관리 프로그램입니다.">
+  <meta name="author" content="부뚜막 & Antigravity">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- 메인 레이아웃 컨테이너 -->
+  <div class="app-container">
+    
+    <!-- 헤더 영역 -->
+    <header class="app-header">
+      <div class="header-content">
+        <div class="logo-area">
+          <div class="logo-glowing-orb"></div>
+          <div class="logo-text">
+            <h1>무명 클랜 (DIABLO4 & POE2)</h1>
+            <p>GUILD MANAGEMENT SYSTEM <span class="version-tag">ver.2</span></p>
+          </div>
+        </div>
+        <div class="header-right">
+          <!-- 테마 스위처 -->
+          <div class="theme-switcher" aria-label="테마 변경">
+            <span class="theme-label">테마</span>
+            <button class="theme-btn active" data-theme="lavender" title="파스텔 라벤더" style="background: linear-gradient(135deg, #b4a7d6, #d5a6bd);"></button>
+            <button class="theme-btn" data-theme="mint" title="파스텔 민트" style="background: linear-gradient(135deg, #a8e6cf, #dcedc1);"></button>
+            <button class="theme-btn" data-theme="peach" title="파스텔 피치" style="background: linear-gradient(135deg, #ffaaa5, #ffd3b6);"></button>
+            <button class="theme-btn" data-theme="sky" title="파스텔 스카이" style="background: linear-gradient(135deg, #a7dbd8, #e0e4cc);"></button>
+            <div class="mode-divider"></div>
+            <button id="btn-mode-toggle" class="mode-toggle-btn" title="다크/라이트 모드 전환">
+              <span class="mode-icon" id="mode-icon">🌙</span>
+            </button>
+          </div>
+          <div class="date-area">
+            <span class="date-label">오늘</span>
+            <span id="current-date-display" class="date-value">2026. 07. 02</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 메인 대시보드 및 콘텐츠 영역 -->
+    <main class="app-main">
+      
+      <!-- 탭 메뉴 영역 -->
+      <div class="tabs-container">
+        <button class="tab-btn active" data-tab="members">👤 길드원 명단</button>
+        <button class="tab-btn" data-tab="organization">🌳 길드 조직도</button>
+        <button class="tab-btn" data-tab="departed">🥀 탈퇴자 명단</button>
+      </div>
+
+      <!-- 1. 길드원 명단 탭 콘텐츠 -->
+      <div id="tab-content-members" class="tab-content active">
+        <!-- 통계 대시보드 섹션 -->
+      <section id="dashboard" class="dashboard-section" aria-label="길드 통계 대시보드">
+        <div class="stat-card total-card">
+          <div class="stat-icon">👥</div>
+          <div class="stat-info">
+            <span class="stat-title">총원</span>
+            <div class="stat-value-group">
+              <span id="stat-total" class="stat-value">0</span>
+              <span class="stat-unit">명</span>
+            </div>
+            <p class="stat-desc">운영진 포함 전체 인원</p>
+          </div>
+        </div>
+        
+        <div class="stat-card admin-card">
+          <div class="stat-icon">👑</div>
+          <div class="stat-info">
+            <span class="stat-title">운영진</span>
+            <div class="stat-value-group">
+              <span id="stat-staff" class="stat-value">0</span>
+              <span class="stat-unit">명</span>
+            </div>
+            <p class="stat-desc">길드 마스터 및 운영자</p>
+          </div>
+        </div>
+        
+        <div class="stat-card member-card">
+          <div class="stat-icon">🛡️</div>
+          <div class="stat-info">
+            <span class="stat-title">일반 길드원</span>
+            <div class="stat-value-group">
+              <span id="stat-member" class="stat-value">0</span>
+              <span class="stat-unit">명</span>
+            </div>
+            <p class="stat-desc">정식 클랜 가입 멤버</p>
+          </div>
+        </div>
+
+        <div class="stat-card kakao-card">
+          <div class="stat-icon">💬</div>
+          <div class="stat-info">
+            <span class="stat-title">단톡 참여</span>
+            <div class="stat-value-group">
+              <span id="stat-kakao" class="stat-value">0</span>
+              <span class="stat-unit">명</span>
+            </div>
+            <div class="stat-sub-info">
+              미참여 <span id="stat-no-kakao" class="stat-badge warning">0</span>명
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card clan-card">
+          <div class="stat-icon">🎮</div>
+          <div class="stat-info">
+            <span class="stat-title">클랜 가입</span>
+            <div class="stat-value-group">
+              <span id="stat-clan" class="stat-value">0</span>
+              <span class="stat-unit">명</span>
+            </div>
+            <div class="stat-sub-info">
+              미가입 <span id="stat-no-clan" class="stat-badge warning">0</span>명
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card special-card">
+          <div class="stat-icon">⭐</div>
+          <div class="stat-info">
+            <span class="stat-title">특별 회원</span>
+            <div class="stat-value-group">
+              <span id="stat-special" class="stat-value">0</span>
+              <span class="stat-unit">명</span>
+            </div>
+            <p class="stat-desc">정예 또는 기여도가 높은 회원</p>
+          </div>
+        </div>
+
+        <div class="stat-card warning-card">
+          <div class="stat-icon">⚠️</div>
+          <div class="stat-info">
+            <span class="stat-title">경고 대상자</span>
+            <div class="stat-value-group">
+              <span id="stat-warning" class="stat-value">0</span>
+              <span class="stat-unit">명</span>
+            </div>
+            <p class="stat-desc">경고 1회 이상 부여된 인원</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 검색/필터 및 유틸리티 툴바 섹션 -->
+      <section id="toolbar" class="toolbar-section" aria-label="필터 및 관리 도구">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" placeholder="배틀태그, 카톡 프로필, POE2 아이디 검색..." autocomplete="off">
+          <button id="btn-clear-search" class="clear-search-btn" title="검색어 비우기">×</button>
+        </div>
+
+        <div class="filters-container">
+          <div class="filter-item">
+            <label for="filter-role">직책</label>
+            <select id="filter-role">
+              <option value="all">전체</option>
+              <option value="staff">운영진</option>
+              <option value="member">일반 길드원</option>
+              <option value="new">신입</option>
+            </select>
+          </div>
+
+          <div class="filter-item">
+            <label for="filter-clan">클랜 가입</label>
+            <select id="filter-clan">
+              <option value="all">전체</option>
+              <option value="true">가입</option>
+              <option value="false">미가입</option>
+            </select>
+          </div>
+
+          <div class="filter-item">
+            <label for="filter-kakao">카카오톡</label>
+            <select id="filter-kakao">
+              <option value="all">전체</option>
+              <option value="true">참여</option>
+              <option value="false">미참여</option>
+            </select>
+          </div>
+
+          <div class="filter-item">
+            <label for="filter-discord">디스코드</label>
+            <select id="filter-discord">
+              <option value="all">전체</option>
+              <option value="true">참여</option>
+              <option value="false">미참여</option>
+            </select>
+          </div>
+
+          <div class="filter-item">
+            <label for="filter-warning">경고 여부</label>
+            <select id="filter-warning">
+              <option value="all">전체</option>
+              <option value="true">경고 있음</option>
+              <option value="false">경고 없음</option>
+            </select>
+          </div>
+
+          <div class="filter-item">
+            <label for="filter-special">특별 회원</label>
+            <select id="filter-special">
+              <option value="all">전체</option>
+              <option value="true">특별 회원</option>
+              <option value="false">일반 회원</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 액션 버튼 영역 -->
+        <div class="action-buttons">
+          <button id="btn-add-member" class="btn btn-primary">➕ 길드원 추가</button>
+          
+          <div class="dropdown-wrapper">
+            <button id="btn-export-menu" class="btn btn-secondary">💾 데이터 내보내기 ▾</button>
+            <div class="dropdown-content">
+              <a href="#" id="btn-export-json">JSON 백업 파일 (.json)</a>
+              <a href="#" id="btn-export-csv">엑셀용 CSV 파일 (.csv)</a>
+            </div>
+          </div>
+          
+          <button id="btn-import-trigger" class="btn btn-secondary">📂 백업 불러오기</button>
+          <input type="file" id="input-import-file" accept=".json" style="display: none;">
+          
+          <button id="btn-kakao-trigger" class="btn btn-secondary" title="카카오톡 대화 로그 파일(.txt)을 분석하여 인원별 단톡 대화 횟수를 일괄 갱신합니다.">💬 카톡 대화 분석 갱신</button>
+          <input type="file" id="input-kakao-file" accept=".txt" style="display: none;">
+        </div>
+      </section>
+
+      <!-- 길드원 데이터 테이블 섹션 -->
+      <section id="table-container" class="table-section">
+        <div class="table-header-meta">
+          <div class="list-count-display">
+            검색 결과: <span id="filtered-count" class="count-highlight">0</span>명 / 전체: <span id="total-count" class="count-highlight">0</span>명
+          </div>
+          <div class="bulk-actions" style="display: none;">
+            <!-- 대량 작업 바 (선택 사항) -->
+          </div>
+        </div>
+
+        <div class="table-responsive-wrapper">
+          <table id="members-table" class="premium-table">
+            <thead>
+              <tr>
+                <th style="width: 50px;">번호</th>
+                <th style="width: 100px;">구분</th>
+                <th>배틀태그</th>
+                <th>카톡 프로필</th>
+                <th>POE2 계정</th>
+                <th style="width: 110px;">가입일</th>
+                <th style="width: 90px; text-align: right;">단톡횟수</th>
+                <th style="width: 80px; text-align: center;">클랜</th>
+                <th style="width: 80px; text-align: center;">카톡</th>
+                <th style="width: 80px; text-align: center;">디코</th>
+                <th style="width: 80px; text-align: center;">특별</th>
+                <th style="width: 80px; text-align: center;">경고</th>
+                <th>비고</th>
+                <th style="width: 130px; text-align: center;">관리</th>
+              </tr>
+            </thead>
+            <tbody id="members-table-body">
+              <!-- JS를 통해 동적으로 행이 삽입됩니다 -->
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- 데이터가 없을 때 표시할 빈 영역 -->
+        <div id="no-data-view" class="no-data-container" style="display: none;">
+          <div class="no-data-icon">🔍</div>
+          <h3>검색 조건에 맞는 길드원이 없습니다.</h3>
+          <p>검색어를 확인하거나 필터 조건을 조정해 주세요.</p>
+        </div>
+      </section>
+      </div>
+
+      <!-- 2. 길드 조직도 탭 콘텐츠 -->
+      <div id="tab-content-organization" class="tab-content">
+        <section class="org-section">
+          <div class="org-header">
+            <h2>무명 클랜 조직도</h2>
+            <p>클랜의 관리 권한 체계 및 운영진 구성도입니다. (실시간 명단 연동)</p>
+          </div>
+          <div id="org-tree-wrapper" class="org-tree-container">
+            <!-- JS를 통해 조직도 트리가 채워집니다 -->
+          </div>
+        </section>
+      </div>
+
+      <!-- 3. 탈퇴자 명단 탭 콘텐츠 -->
+      <div id="tab-content-departed" class="tab-content">
+        <section class="table-section">
+          <div class="table-header-meta">
+            <div class="list-count-display">
+              탈퇴한 길드원: <span id="departed-count" class="count-highlight">0</span>명
+            </div>
+            <div class="search-wrapper" style="max-width: 350px;">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="search-input-departed" class="search-input" placeholder="탈퇴자 배틀태그, 카톡 프로필 검색...">
+            </div>
+          </div>
+          
+          <div class="table-responsive-wrapper">
+            <table id="departed-table" class="premium-table">
+              <thead>
+                <tr>
+                  <th style="width: 50px;">번호</th>
+                  <th>배틀태그</th>
+                  <th>카톡 프로필</th>
+                  <th>POE2 계정</th>
+                  <th style="width: 110px;">가입일</th>
+                  <th style="width: 110px;">탈퇴일자</th>
+                  <th style="width: 90px; text-align: right;">단톡횟수</th>
+                  <th>탈퇴 사유 / 비고</th>
+                  <th style="width: 130px; text-align: center;">관리</th>
+                </tr>
+              </thead>
+              <tbody id="departed-table-body">
+                <!-- JS를 통해 동적으로 행이 삽입됩니다 -->
+              </tbody>
+            </table>
+          </div>
+          
+          <!-- 탈퇴자 명단이 없을 때 표시할 빈 영역 -->
+          <div id="no-departed-view" class="no-data-container" style="display: none;">
+            <div class="no-data-icon">🥀</div>
+            <h3>탈퇴자 명단이 비어 있습니다.</h3>
+          </div>
+        </section>
+      </div>
+
+    </main>
+
+    <!-- 푸터 영역 -->
+    <footer class="app-footer">
+      <p>&copy; 2026 무명 길드 인원 관리 시스템. Developed for DIABLO4 & POE2 Guild.</p>
+    </footer>
+  </div>
+
+  <!-- 길드원 추가/수정 모달창 -->
+  <div id="member-modal" class="modal-overlay" aria-hidden="true" role="dialog">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="modal-title">길드원 추가</h2>
+        <button id="modal-close-x" class="modal-close-btn">&times;</button>
+      </div>
+      <form id="member-form" class="modal-body">
+        <!-- 숨겨진 id 필드 (수정 시 사용) -->
+        <input type="hidden" id="member-id-field">
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="form-role">구분 *</label>
+            <select id="form-role" required>
+              <option value="member">일반 길드원</option>
+              <option value="staff">운영진</option>
+              <option value="new">신입</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="form-battletag">배틀태그 *</label>
+            <input type="text" id="form-battletag" placeholder="예: 그냥웃는거야#3945" required>
+          </div>
+
+          <div class="form-group">
+            <label for="form-kakao">카톡 프로필 *</label>
+            <input type="text" id="form-kakao" placeholder="예: 츄니/그냥웃는거야#3945" required>
+          </div>
+
+          <div class="form-group">
+            <label for="form-poe2">POE2 계정</label>
+            <input type="text" id="form-poe2" placeholder="예: 오나의추니#7125">
+          </div>
+
+          <div class="form-group">
+            <label for="form-joindate">가입일</label>
+            <input type="text" id="form-joindate" placeholder="예: 26. 07. 02">
+          </div>
+
+          <div class="form-group">
+            <label for="form-chatcount">단톡 횟수</label>
+            <input type="number" id="form-chatcount" min="0" value="0">
+          </div>
+        </div>
+
+        <div class="form-checkbox-group">
+          <div class="checkbox-item">
+            <input type="checkbox" id="form-inclan">
+            <label for="form-inclan">클랜 가입 (In-game Clan)</label>
+          </div>
+
+          <div class="checkbox-item">
+            <input type="checkbox" id="form-inkakao" checked>
+            <label for="form-inkakao">카톡 참여 (KakaoTalk)</label>
+          </div>
+
+          <div class="checkbox-item">
+            <input type="checkbox" id="form-indiscord">
+            <label for="form-indiscord">디코 참여 (Discord)</label>
+          </div>
+
+          <div class="checkbox-item" id="special-member-checkbox-wrap">
+            <input type="checkbox" id="form-isspecial">
+            <label for="form-isspecial">특별 회원 지정</label>
+          </div>
+
+          <div class="checkbox-item">
+            <input type="checkbox" id="form-warning">
+            <label for="form-warning" class="text-danger">⚠️ 경고 대상 지정</label>
+          </div>
+        </div>
+
+        <div class="form-group full-width">
+          <label for="form-notes">비고 / 참고사항</label>
+          <textarea id="form-notes" rows="3" placeholder="기타 특이사항이나 지인 정보 등을 입력해 주세요."></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="modal-cancel-btn" class="btn btn-secondary">취소</button>
+          <button type="submit" id="modal-submit-btn" class="btn btn-primary">저장</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 카카오톡 대화 분석 설정 모달창 -->
+  <div id="kakao-modal" class="modal-overlay" aria-hidden="true" role="dialog">
+    <div class="modal-card" style="max-width: 500px;">
+      <div class="modal-header">
+        <h2>💬 카톡 대화 분석 기간 설정</h2>
+        <button id="kakao-modal-close-x" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 15px; line-height: 1.6;">
+          업로드할 카카오톡 대화 내역(.txt)에서 집계할 <b>날짜 범위</b>를 지정해 주세요.<br>
+          지정된 기간 외의 대화는 집계에서 제외됩니다.
+        </p>
+
+        <div class="form-group" style="margin-bottom: 15px;">
+          <label>기간 선택</label>
+          <select id="kakao-period-preset" style="width: 100%; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 10px; color: var(--text-primary);">
+            <option value="all">전체 기간 분석</option>
+            <option value="7days">최근 1주일 (7일)</option>
+            <option value="30days">최근 1개월 (30일)</option>
+            <option value="custom">사용자 지정 기간</option>
+          </select>
+        </div>
+
+        <div id="kakao-custom-date-fields" class="form-grid" style="display: none; margin-bottom: 15px;">
+          <div class="form-group">
+            <label for="kakao-start-date">시작일</label>
+            <input type="date" id="kakao-start-date" style="background: var(--bg-input); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 10px; color: var(--text-primary); font-family: var(--font-sans);">
+          </div>
+          <div class="form-group">
+            <label for="kakao-end-date">종료일</label>
+            <input type="date" id="kakao-end-date" style="background: var(--bg-input); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 10px; color: var(--text-primary); font-family: var(--font-sans);">
+          </div>
+        </div>
+
+        <div class="modal-footer" style="margin-top: 15px; border-top: 1px solid var(--border-color); padding-top: 15px;">
+          <button type="button" id="kakao-modal-cancel-btn" class="btn btn-secondary">취소</button>
+          <button type="button" id="kakao-modal-submit-btn" class="btn btn-primary">대화 파일 선택 및 분석 시작</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 알림 토스트 메시지용 -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- 데이터 연동용 파일 로드 -->
+  <script src="initialData.js"></script>
+  <script src="departedData.js"></script>
+  <script src="app.js" defer></script>
+</body>
+</html>
