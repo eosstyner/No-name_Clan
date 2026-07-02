@@ -164,13 +164,15 @@ function initializeApp() {
       // 역할이 staff나 member인데 번호(no)가 누락(null/undefined)된 회원이 있으면 자동으로 다음 번호를 매겨 복구합니다.
       let hasFix = false;
       members.forEach(member => {
-        if (member.role !== 'new' && (member.no === null || member.no === undefined)) {
+        if (member.no === null || member.no === undefined) {
           const sameRoleMembers = members.filter(m => m.role === member.role && m.no !== null && m.no !== undefined);
           let nextNo = 1;
           if (sameRoleMembers.length > 0) {
             nextNo = Math.max(...sameRoleMembers.map(m => m.no)) + 1;
           } else if (member.role === 'member') {
-            nextNo = 2; // 기존 일반 길드원 시작 번호가 2번이므로
+            nextNo = 8; // 운영진이 7번까지 있으므로 일반 길드원은 8번부터 시작
+          } else if (member.role === 'new') {
+            nextNo = 146; // 신입은 146번부터 시작
           }
           member.no = nextNo;
           hasFix = true;
@@ -339,7 +341,33 @@ function saveToFirebase(newMembers, newDeparted) {
   });
 }
 
+// 직책별로 번호를 빈 구멍(빈 번호) 없이 순차적으로 재할당 및 압축
+function reassignNumbers() {
+  // 1. 운영진 번호 재할당 (1 ~ 7번 대역 유지)
+  const staffs = members.filter(m => m.role === 'staff');
+  staffs.sort((a, b) => (a.no || 0) - (b.no || 0));
+  staffs.forEach((m, idx) => {
+    m.no = idx + 1;
+  });
+
+  // 2. 일반 회원 번호 재할당 (8번부터 시작)
+  const regularMembers = members.filter(m => m.role === 'member');
+  regularMembers.sort((a, b) => (a.no || 0) - (b.no || 0));
+  regularMembers.forEach((m, idx) => {
+    m.no = idx + 8;
+  });
+
+  // 3. 신입 회원 번호 재할당 (일반 회원 바로 다음 번호부터 시작)
+  const newMembers = members.filter(m => m.role === 'new');
+  newMembers.sort((a, b) => (a.no || 0) - (b.no || 0));
+  const newStartNo = 8 + regularMembers.length;
+  newMembers.forEach((m, idx) => {
+    m.no = newStartNo + idx;
+  });
+}
+
 function saveToLocalStorage() {
+  reassignNumbers(); // 저장하기 전에 항상 번호의 빈 구멍을 정렬 및 압축합니다.
   localStorage.setItem('no_name_clan_members', JSON.stringify(members));
   saveToFirebase(members, departedMembers);
 }
@@ -351,29 +379,27 @@ function saveDepartedToLocalStorage() {
 
 // 2. 대시보드 통계 계산 및 화면 업데이트
 function updateAppView() {
-  // 1) 통계 계산 (신입 제외 여부 반영)
-  // 원래 시트 통계는 '신입'을 별도로 취급하므로, 'staff'와 'member'를 기준으로 연산합니다.
-  const activeMembers = members.filter(m => m.role !== 'new');
+  // 1) 통계 계산 (신입 포함 전체 기준 연산)
+  const totalCount = members.length;
   const allStaff = members.filter(m => m.role === 'staff');
   const allRegular = members.filter(m => m.role === 'member');
   
-  const totalCount = activeMembers.length;
   const staffCount = allStaff.length;
   const memberCount = allRegular.length;
   
-  // 단톡 참여/미참여 (신입 제외)
-  const kakaoCount = activeMembers.filter(m => m.inKakao).length;
+  // 단톡 참여/미참여
+  const kakaoCount = members.filter(m => m.inKakao).length;
   const noKakaoCount = totalCount - kakaoCount;
   
-  // 클랜 가입/미가입 (신입 제외)
-  const clanCount = activeMembers.filter(m => m.inClan).length;
+  // 클랜 가입/미가입
+  const clanCount = members.filter(m => m.inClan).length;
   const noClanCount = totalCount - clanCount;
   
-  // 특별 회원 (신입 제외)
-  const specialCount = activeMembers.filter(m => m.isSpecial).length;
+  // 특별 회원
+  const specialCount = members.filter(m => m.isSpecial).length;
   
-  // 경고 대상 (신입 제외)
-  const warningCount = activeMembers.filter(m => m.warning).length;
+  // 경고 대상
+  const warningCount = members.filter(m => m.warning).length;
 
   // 2) 대시보드 요소 업데이트
   elements.statTotal.textContent = totalCount;
@@ -654,16 +680,16 @@ function handleFormSubmit(e) {
     const idx = members.findIndex(m => m.id === id);
     if (idx !== -1) {
       let memberNo = members[idx].no;
-      // 신입에서 운영진/일반회원으로 변경되거나 번호가 빈 채로 일반회원이 된 경우 번호 부여
-      if (role === 'new') {
-        memberNo = null;
-      } else if (memberNo === null || memberNo === undefined) {
+      // 직책(역할)이 바뀌었거나 번호가 빈 경우 알맞은 범위의 번호 부여
+      if (role !== members[idx].role || memberNo === null || memberNo === undefined) {
         const sameRoleMembers = members.filter(m => m.role === role && m.no !== null && m.no !== undefined);
         let nextNo = 1;
         if (sameRoleMembers.length > 0) {
           nextNo = Math.max(...sameRoleMembers.map(m => m.no)) + 1;
         } else if (role === 'member') {
-          nextNo = 2;
+          nextNo = 8;
+        } else if (role === 'new') {
+          nextNo = 146;
         }
         memberNo = nextNo;
       }
@@ -694,13 +720,15 @@ function handleFormSubmit(e) {
     if (sameRoleMembers.length > 0) {
       nextNo = Math.max(...sameRoleMembers.map(m => m.no)) + 1;
     } else if (role === 'member') {
-      nextNo = 2; // 기존 일반 길드원 시작이 2번이므로
+      nextNo = 8; // 운영진이 7번까지 있으므로 일반 길드원은 8번부터 시작
+    } else if (role === 'new') {
+      nextNo = 146; // 신입은 146번부터 시작
     }
 
     const newId = role + '_' + Date.now();
     members.push({
       id: newId,
-      no: role === 'new' ? null : nextNo, // 신입은 번호가 없음
+      no: nextNo, // 신입도 이제 번호가 부여됨
       role,
       battleTag,
       kakaoProfile,
