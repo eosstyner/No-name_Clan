@@ -474,6 +474,27 @@
     </div>
   </div>
 
+  <!-- 비밀번호 잠금 모달창 -->
+  <div id="auth-overlay" class="modal-overlay active" style="z-index: 9999; backdrop-filter: blur(25px); background: rgba(12, 11, 16, 0.98);">
+    <div class="modal-card" style="max-width: 400px; text-align: center; border: 1px solid var(--border-color); box-shadow: var(--shadow-2xl); padding: 30px;">
+      <div style="font-size: 3rem; margin-bottom: 15px;">🔒</div>
+      <h2 style="font-size: 1.5rem; margin-bottom: 10px; font-weight: 700;">무명 클랜 GMS</h2>
+      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 25px; line-height: 1.5;">
+        이 시스템은 운영진 전용입니다.<br>액세스 코드를 입력해 주세요.
+      </p>
+      <form id="auth-form">
+        <div class="form-group" style="margin-bottom: 20px;">
+          <input type="password" id="auth-password" placeholder="비밀번호 입력..." required 
+            style="width: 100%; text-align: center; font-size: 1.1rem; letter-spacing: 4px; padding: 12px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-primary);">
+        </div>
+        <div id="auth-error-msg" class="text-danger" style="display: none; font-size: 0.8rem; margin-bottom: 15px; font-weight: 500;">
+          ❌ 비밀번호가 올바르지 않습니다.
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 1rem; font-weight: 600;">시스템 열기</button>
+      </form>
+    </div>
+  </div>
+
   <!-- 알림 토스트 메시지용 -->
   <div id="toast-container" class="toast-container"></div>
 

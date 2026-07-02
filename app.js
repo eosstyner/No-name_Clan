@@ -82,8 +82,64 @@ const elements = {
   kakaoEndDate: document.getElementById('kakao-end-date')
 };
 
+// 비밀번호 인증 암호화 및 잠금 제어 로직
+async function sha256(message) {
+  const msgBuffer = new TextEncoder().encode(message);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function checkAuthorization() {
+  const authOverlay = document.getElementById('auth-overlay');
+  const authForm = document.getElementById('auth-form');
+  const authPassword = document.getElementById('auth-password');
+  const authErrorMsg = document.getElementById('auth-error-msg');
+
+  if (!authOverlay || !authForm) return;
+
+  // 이미 인증을 통과한 기기인지 확인
+  const isAuth = localStorage.getItem('gms_authorized') === 'true';
+  if (isAuth) {
+    authOverlay.style.display = 'none';
+    authOverlay.classList.remove('active');
+    return;
+  }
+
+  // 인증 수행
+  authForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const inputPwd = authPassword.value;
+    // 비밀번호: mumu1234
+    const hashedInput = await sha256(inputPwd);
+    const targetHash = '422b01a0de571b2441acfb5ce2f2432cd224f335f124f5f852af9ec093916283';
+
+    if (hashedInput === targetHash) {
+      localStorage.setItem('gms_authorized', 'true');
+      authOverlay.style.animation = 'fade-out 0.3s forwards';
+      authOverlay.addEventListener('animationend', () => {
+        authOverlay.style.display = 'none';
+        authOverlay.classList.remove('active');
+      });
+      // 애니메이션 미지원 브라우저 대비 즉시 제거 폴백
+      setTimeout(() => {
+        authOverlay.style.display = 'none';
+        authOverlay.classList.remove('active');
+      }, 350);
+      showToast('인증되었습니다. 환영합니다!', 'success');
+    } else {
+      authErrorMsg.style.display = 'block';
+      authPassword.value = '';
+      authPassword.focus();
+    }
+  });
+}
+
 // 1. 초기 데이터 설정 및 로컬스토리지 로드
 function initializeApp() {
+  // 보안을 위한 인증 절차 체크
+  checkAuthorization();
+
   // 실시간 오늘 날짜 및 시계 업데이트 설정
   function updateClock() {
     const today = new Date();
