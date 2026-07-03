@@ -6,6 +6,7 @@
 let members = [];
 let departedMembers = [];
 let blacklist = [];
+let sortDirection = 'asc'; // 'asc' 또는 'desc' (정순/역순)
 
 // DOM 요소 캐싱
 const elements = {
@@ -531,16 +532,19 @@ function renderTable(filteredList) {
 
   elements.noDataView.style.display = 'none';
 
-  // 정렬 순서: 운영진 -> 일반 -> 신입 순서, 그 안에서는 NO 번호 순서
+  // 정렬 순서: 기본(오름차순)은 운영진 -> 일반 -> 신입 순서 (번호 오름차순)
+  // 역순(내림차순)은 신입 -> 일반 -> 운영진 순서 (번호 내림차순)
   const sortedList = [...filteredList].sort((a, b) => {
     const roleOrder = { 'staff': 1, 'member': 2, 'new': 3 };
+    let comparison = 0;
     if (roleOrder[a.role] !== roleOrder[b.role]) {
-      return roleOrder[a.role] - roleOrder[b.role];
+      comparison = roleOrder[a.role] - roleOrder[b.role];
+    } else {
+      const aNo = a.no || 99999;
+      const bNo = b.no || 99999;
+      comparison = aNo - bNo;
     }
-    // 번호가 있는 경우 오름차순 정렬
-    const aNo = a.no || 99999;
-    const bNo = b.no || 99999;
-    return aNo - bNo;
+    return sortDirection === 'asc' ? comparison : -comparison;
   });
 
   let html = '';
@@ -1913,6 +1917,19 @@ window.saveInlineBlacklist = function() {
     renderBlacklist();
     showToast('블랙리스트에 새 인원이 수동 추가되었습니다.', 'success');
   }
+};
+
+// 정렬 방향 토글 (정순 <-> 역순)
+window.toggleSortDirection = function() {
+  sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+  
+  // 버튼 텍스트 변경
+  const btn = document.getElementById('btn-toggle-sort');
+  if (btn) {
+    btn.innerHTML = sortDirection === 'asc' ? '⇅ 번호 역순으로 보기' : '⇅ 번호 정순으로 보기';
+  }
+  
+  applyFiltersAndRender();
 };
 
 // 디바운스 헬퍼 함수 (검색 시 과도한 DOM 쓰기 방지)

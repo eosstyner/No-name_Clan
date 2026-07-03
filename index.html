@@ -240,8 +240,9 @@
       <!-- 길드원 데이터 테이블 섹션 -->
       <section id="table-container" class="table-section">
         <div class="table-header-meta">
-          <div class="list-count-display">
-            검색 결과: <span id="filtered-count" class="count-highlight">0</span>명 / 전체: <span id="total-count" class="count-highlight">0</span>명
+          <div class="list-count-display" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <div>검색 결과: <span id="filtered-count" class="count-highlight">0</span>명 / 전체: <span id="total-count" class="count-highlight">0</span>명</div>
+            <button id="btn-toggle-sort" class="btn btn-secondary" onclick="toggleSortDirection()" style="padding: 4px 8px; font-size: 0.75rem; display: flex; align-items: center; gap: 4px; height: auto;" title="정렬 방향을 정순/역순으로 전환합니다.">⇅ 번호 역순으로 보기</button>
           </div>
           <div class="bulk-actions" style="display: none;">
             <!-- 대량 작업 바 (선택 사항) -->
