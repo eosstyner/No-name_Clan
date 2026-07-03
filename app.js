@@ -293,7 +293,20 @@ function initFirebase() {
         const data = doc.data();
         if (data.members) {
           members = data.members;
-          localStorage.setItem('no_name_clan_members', JSON.stringify(members));
+          
+          // 번호 자동 정렬 및 치유 로직 (번호 누락, 꼬임, 중복, 비는 구간 자동 정정)
+          const beforeHash = JSON.stringify(members.map(m => m.no));
+          reassignNumbers();
+          const afterHash = JSON.stringify(members.map(m => m.no));
+          
+          if (beforeHash !== afterHash) {
+            console.log("실시간 정밀 감지: 번호 정렬 순서가 올바르지 않아 자동으로 번호를 재배열하여 동기화합니다.");
+            localStorage.setItem('no_name_clan_members', JSON.stringify(members));
+            // 클라우드 서버에 정정된 번호 업로드 (무한 루프 방지를 위해 해시 변경 감지시에만 실행)
+            saveToFirebase(members, data.departedMembers || departedMembers);
+          } else {
+            localStorage.setItem('no_name_clan_members', JSON.stringify(members));
+          }
         }
         if (data.departedMembers) {
           departedMembers = data.departedMembers;
