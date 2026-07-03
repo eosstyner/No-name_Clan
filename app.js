@@ -1473,6 +1473,88 @@ function registerEventListeners() {
       elements.inputKakaoFile.click();
     });
   }
+
+  // 대시보드 통계 카드 클릭 시 필터 자동 연동
+  const totalCard = document.querySelector('.total-card');
+  if (totalCard) {
+    totalCard.addEventListener('click', () => {
+      elements.filterRole.value = 'all';
+      elements.filterClan.value = 'all';
+      elements.filterKakao.value = 'all';
+      elements.filterDiscord.value = 'all';
+      elements.filterWarning.value = 'all';
+      elements.filterSpecial.value = 'all';
+      elements.searchInput.value = '';
+      applyFiltersAndRender();
+      showToast('전체 길드원이 필터링되었습니다.', 'success');
+    });
+  }
+
+  const adminCard = document.querySelector('.admin-card');
+  if (adminCard) {
+    adminCard.addEventListener('click', () => {
+      elements.filterRole.value = 'staff';
+      applyFiltersAndRender();
+      showToast('운영진만 필터링되었습니다.', 'success');
+    });
+  }
+
+  const memberCard = document.querySelector('.member-card');
+  if (memberCard) {
+    memberCard.addEventListener('click', () => {
+      elements.filterRole.value = 'member';
+      applyFiltersAndRender();
+      showToast('일반 길드원만 필터링되었습니다.', 'success');
+    });
+  }
+
+  const kakaoCard = document.querySelector('.kakao-card');
+  if (kakaoCard) {
+    kakaoCard.addEventListener('click', (e) => {
+      // 미참여 배지 클릭 시 미참여 필터링
+      if (e.target.classList.contains('stat-badge') || e.target.id === 'stat-no-kakao') {
+        elements.filterKakao.value = 'false';
+        showToast('단톡 미참여 멤버만 필터링되었습니다.', 'warning');
+      } else {
+        elements.filterKakao.value = 'true';
+        showToast('단톡 참여 멤버만 필터링되었습니다.', 'success');
+      }
+      applyFiltersAndRender();
+    });
+  }
+
+  const clanCard = document.querySelector('.clan-card');
+  if (clanCard) {
+    clanCard.addEventListener('click', (e) => {
+      // 미가입 배지 클릭 시 미가입 필터링
+      if (e.target.classList.contains('stat-badge') || e.target.id === 'stat-no-clan') {
+        elements.filterClan.value = 'false';
+        showToast('클랜 미가입 멤버만 필터링되었습니다.', 'warning');
+      } else {
+        elements.filterClan.value = 'true';
+        showToast('클랜 가입 멤버만 필터링되었습니다.', 'success');
+      }
+      applyFiltersAndRender();
+    });
+  }
+
+  const specialCard = document.querySelector('.special-card');
+  if (specialCard) {
+    specialCard.addEventListener('click', () => {
+      elements.filterSpecial.value = 'true';
+      applyFiltersAndRender();
+      showToast('특별 회원만 필터링되었습니다.', 'success');
+    });
+  }
+
+  const warningCard = document.querySelector('.warning-card');
+  if (warningCard) {
+    warningCard.addEventListener('click', () => {
+      elements.filterWarning.value = 'true';
+      applyFiltersAndRender();
+      showToast('경고 대상자만 필터링되었습니다.', 'warning');
+    });
+  }
 }
 
 // 탭 전환 기능

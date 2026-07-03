@@ -439,6 +439,7 @@ body {
   box-shadow: var(--shadow-sm);
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .stat-card::before {
