@@ -5,6 +5,7 @@
 // 애플리케이션 상태 관리
 let members = [];
 let departedMembers = [];
+let blacklist = [];
 
 // DOM 요소 캐싱
 const elements = {
@@ -202,10 +203,22 @@ function initializeApp() {
       departedMembers = [...initialDepartedMembers];
       saveDepartedToLocalStorage();
     }
-  } else {
-    // initialDepartedMembers는 departedData.js에서 전역 로드됨
     departedMembers = [...initialDepartedMembers];
     saveDepartedToLocalStorage();
+  }
+
+  // 블랙리스트 데이터 확인
+  const savedBlacklist = localStorage.getItem('no_name_clan_blacklist');
+  if (savedBlacklist) {
+    try {
+      blacklist = JSON.parse(savedBlacklist);
+    } catch (e) {
+      console.error('블랙리스트 로컬 스토리지 파싱 오류', e);
+      blacklist = [];
+    }
+  } else {
+    blacklist = [];
+    localStorage.setItem('no_name_clan_blacklist', JSON.stringify(blacklist));
   }
 
   // 테마 초기화
@@ -312,6 +325,10 @@ function initFirebase() {
           departedMembers = data.departedMembers;
           localStorage.setItem('no_name_clan_departed', JSON.stringify(departedMembers));
         }
+        if (data.blacklist) {
+          blacklist = data.blacklist;
+          localStorage.setItem('no_name_clan_blacklist', JSON.stringify(blacklist));
+        }
         updateAppView();
         console.log("실시간 데이터 동기화 완료!");
       } else {
@@ -319,11 +336,13 @@ function initFirebase() {
         console.log("클라우드 DB 데이터를 초기화 파일 데이터로 강제 리셋합니다.");
         members = [...initialMembers];
         departedMembers = [...initialDepartedMembers];
+        blacklist = [];
         
         // 로컬 스토리지에 먼저 덮어쓰고 서버에 업로드
         localStorage.setItem('no_name_clan_members', JSON.stringify(members));
         localStorage.setItem('no_name_clan_departed', JSON.stringify(departedMembers));
-        saveToFirebase(members, departedMembers);
+        localStorage.setItem('no_name_clan_blacklist', JSON.stringify(blacklist));
+        saveToFirebase(members, departedMembers, blacklist);
         
         // 무한 루프 리셋을 방지하기 위해 URL의 ?reset=true 파라미터를 브라우저 주소창에서 깔끔하게 제거
         if (forceReset) {
@@ -341,11 +360,12 @@ function initFirebase() {
   }
 }
 
-function saveToFirebase(newMembers, newDeparted) {
+function saveToFirebase(newMembers, newDeparted, newBlacklist) {
   if (!isFirebaseInitialized || !db) return;
   db.collection('gms_data').doc('state').set({
     members: newMembers,
     departedMembers: newDeparted,
+    blacklist: newBlacklist || blacklist,
     updatedAt: firebase.firestore.FieldValue.serverTimestamp()
   }).then(() => {
     console.log("클라우드 DB 업로드 완료!");
@@ -382,12 +402,17 @@ function reassignNumbers() {
 function saveToLocalStorage() {
   reassignNumbers(); // 저장하기 전에 항상 번호의 빈 구멍을 정렬 및 압축합니다.
   localStorage.setItem('no_name_clan_members', JSON.stringify(members));
-  saveToFirebase(members, departedMembers);
+  saveToFirebase(members, departedMembers, blacklist);
 }
 
 function saveDepartedToLocalStorage() {
   localStorage.setItem('no_name_clan_departed', JSON.stringify(departedMembers));
-  saveToFirebase(members, departedMembers);
+  saveToFirebase(members, departedMembers, blacklist);
+}
+
+function saveBlacklistToLocalStorage() {
+  localStorage.setItem('no_name_clan_blacklist', JSON.stringify(blacklist));
+  saveToFirebase(members, departedMembers, blacklist);
 }
 
 // 2. 대시보드 통계 계산 및 화면 업데이트
@@ -580,6 +605,7 @@ function renderTable(filteredList) {
           <div class="row-actions">
             <button class="btn-icon edit-btn" onclick="openEditModal('${member.id}')" title="수정">✏️</button>
             <button class="btn-icon delete-btn" onclick="deleteMember('${member.id}')" title="삭제">🗑️</button>
+            <button class="btn-icon blacklist-btn" onclick="blacklistMember('${member.id}', 'members')" title="블랙리스트 등록" style="background: none; border: none; cursor: pointer; filter: grayscale(1); transition: filter 0.2s;" onmouseover="this.style.filter='none'" onmouseout="this.style.filter='grayscale(1)'">🚫</button>
           </div>
         </td>
       </tr>
@@ -804,7 +830,12 @@ window.deleteMember = function(id) {
 
 // 8. 백업 데이터 내보내기 및 백업 복원 기능
 function exportJSON() {
-  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(members, null, 2));
+  const exportData = {
+    members: members,
+    departedMembers: departedMembers,
+    blacklist: blacklist
+  };
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportData, null, 2));
   const downloadAnchor = document.createElement('a');
   downloadAnchor.setAttribute("href", dataStr);
   downloadAnchor.setAttribute("download", `no_name_guild_backup_${getFormattedDate()}.json`);
@@ -870,11 +901,37 @@ function handleImportFile(e) {
     try {
       const importedData = JSON.parse(event.target.result);
       
-      // 최소 유효성 검증
-      if (Array.isArray(importedData) && importedData.length > 0 && importedData[0].hasOwnProperty('battleTag')) {
-        if (confirm(`가져온 파일에서 ${importedData.length}명의 데이터를 복원하시겠습니까? 기존 데이터는 덮어씌워집니다.`)) {
-          members = importedData;
+      let valid = false;
+      let targetMembers = [];
+      let targetDeparted = [];
+      let targetBlacklist = [];
+      
+      if (Array.isArray(importedData)) {
+        // 구버전 백업 형식 (직접 배열)
+        if (importedData.length > 0 && importedData[0].hasOwnProperty('battleTag')) {
+          valid = true;
+          targetMembers = importedData;
+        }
+      } else if (importedData && typeof importedData === 'object') {
+        // 신버전 백업 형식 (객체)
+        if (importedData.members && Array.isArray(importedData.members)) {
+          valid = true;
+          targetMembers = importedData.members;
+          targetDeparted = importedData.departedMembers || [];
+          targetBlacklist = importedData.blacklist || [];
+        }
+      }
+
+      if (valid) {
+        if (confirm(`가져온 파일에서 데이터를 복원하시겠습니까? 기존 데이터는 덮어씌워집니다.`)) {
+          members = targetMembers;
+          departedMembers = targetDeparted;
+          blacklist = targetBlacklist;
+          
           saveToLocalStorage();
+          saveDepartedToLocalStorage();
+          saveBlacklistToLocalStorage();
+          
           updateAppView();
           showToast('백업 파일로부터 데이터를 성공적으로 복원했습니다.', 'success');
         }
@@ -1363,6 +1420,18 @@ function registerEventListeners() {
     searchInputDeparted.addEventListener('input', renderDepartedMembers);
   }
 
+  // 블랙리스트 검색 바인딩
+  const searchInputBlacklist = document.getElementById('search-input-blacklist');
+  if (searchInputBlacklist) {
+    searchInputBlacklist.addEventListener('input', renderBlacklist);
+  }
+
+  // 블랙리스트 수동 추가 버튼 바인딩
+  const btnAddBlacklist = document.getElementById('btn-add-blacklist');
+  if (btnAddBlacklist) {
+    btnAddBlacklist.addEventListener('click', addInlineBlacklistRow);
+  }
+
   // 카톡 분석 모달 이벤트 바인딩
   if (elements.kakaoModalCloseX) {
     elements.kakaoModalCloseX.addEventListener('click', closeKakaoModal);
@@ -1422,11 +1491,13 @@ function switchTab(tabName) {
     }
   });
   
-  // 조직도 또는 탈퇴자 탭으로 전환되었을 때 화면 즉시 갱신
+  // 조직도, 탈퇴자 또는 블랙리스트 탭으로 전환되었을 때 화면 즉시 갱신
   if (tabName === 'organization') {
     renderOrgChart();
   } else if (tabName === 'departed') {
     renderDepartedMembers();
+  } else if (tabName === 'blacklist') {
+    renderBlacklist();
   }
 }
 
@@ -1552,6 +1623,7 @@ function renderDepartedMembers() {
           <div class="row-actions" style="justify-content: center; gap: 8px;">
             <button onclick="restoreMember('${m.id}')" class="btn btn-secondary btn-sm" style="padding: 4px 8px; font-size: 0.75rem; color: var(--success); border-color: rgba(5, 150, 105, 0.3);" title="길드원으로 복구">🔄 복구</button>
             <button onclick="deleteDepartedPermanently('${m.id}')" class="btn btn-danger btn-sm" style="padding: 4px 8px; font-size: 0.75rem;" title="영구 삭제">🗑️ 삭제</button>
+            <button onclick="blacklistMember('${m.id}', 'departed')" class="btn btn-danger btn-sm" style="padding: 4px 8px; font-size: 0.75rem; background: rgba(220, 38, 38, 0.2); color: var(--danger); border-color: rgba(220, 38, 38, 0.4);" title="블랙리스트 등록">🚫 블랙</button>
           </div>
         </td>
       </tr>
@@ -1600,6 +1672,246 @@ window.deleteDepartedPermanently = function(id) {
     saveDepartedToLocalStorage();
     updateAppView();
     showToast(`'${item.battleTag}'님의 데이터가 영구 삭제되었습니다.`, 'danger');
+  }
+};
+
+// 블랙리스트 명단 렌더링
+function renderBlacklist() {
+  const tableBody = document.getElementById('blacklist-table-body');
+  const countDisplay = document.getElementById('blacklist-count');
+  const noDataView = document.getElementById('no-blacklist-view');
+  if (!tableBody) return;
+
+  const searchQuery = document.getElementById('search-input-blacklist')?.value.toLowerCase().trim() || '';
+
+  // 필터링
+  const filtered = blacklist.filter(m => {
+    const matchesSearch = !searchQuery || 
+      m.battleTag.toLowerCase().includes(searchQuery) ||
+      (m.notes && m.notes.toLowerCase().includes(searchQuery));
+    return matchesSearch;
+  });
+
+  // 카운트 표시
+  if (countDisplay) {
+    countDisplay.textContent = filtered.length;
+  }
+
+  // 데이터 여부에 따른 뷰 조절
+  if (filtered.length === 0) {
+    tableBody.innerHTML = '';
+    if (noDataView) noDataView.style.display = 'block';
+    return;
+  }
+
+  if (noDataView) noDataView.style.display = 'none';
+
+  let html = '';
+  filtered.forEach((m, index) => {
+    if (m.isTemp) {
+      html += `
+        <tr style="background: rgba(220, 38, 38, 0.05);">
+          <td>${index + 1}</td>
+          <td>
+            <input type="text" id="edit-blacklist-battletag" placeholder="배틀태그#12345" style="width: 100%; max-width: 220px; background: var(--bg-input); border: 1px solid var(--danger); padding: 4px 8px; border-radius: 4px; color: var(--text-primary); font-weight: bold;" value="${escapeHTML(m.battleTag)}">
+          </td>
+          <td><span class="badge" style="background: rgba(220, 38, 38, 0.15); color: var(--danger); font-size: 0.75rem; border: 1px solid var(--border-color);">${escapeHTML(m.blacklistedDate)}</span></td>
+          <td>
+            <input type="text" id="edit-blacklist-notes" placeholder="블랙리스트 등록 사유 입력" style="width: 100%; background: var(--bg-input); border: 1px solid var(--border-color); padding: 4px 8px; border-radius: 4px; color: var(--text-primary);" value="${escapeHTML(m.notes)}">
+          </td>
+          <td style="text-align: center;">
+            <div class="row-actions" style="justify-content: center; gap: 8px;">
+              <button onclick="saveInlineBlacklist()" class="btn btn-primary btn-sm" style="padding: 4px 8px; font-size: 0.75rem; background: var(--success); border-color: var(--success);" title="저장">💾 저장</button>
+              <button onclick="cancelInlineBlacklist()" class="btn btn-secondary btn-sm" style="padding: 4px 8px; font-size: 0.75rem;" title="취소">❌ 취소</button>
+            </div>
+          </td>
+        </tr>
+      `;
+    } else {
+      html += `
+        <tr>
+          <td>${index + 1}</td>
+          <td>
+            <span class="battletag-text" style="color: var(--danger); font-weight: bold;">${escapeHTML(m.battleTag)}</span>
+          </td>
+          <td><span class="badge" style="background: rgba(220, 38, 38, 0.15); color: var(--danger); font-size: 0.75rem; border: 1px solid var(--border-color);">${escapeHTML(m.blacklistedDate)}</span></td>
+          <td style="color: var(--text-secondary); max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${escapeHTML(m.notes)}">${escapeHTML(m.notes)}</td>
+          <td style="text-align: center;">
+            <div class="row-actions" style="justify-content: center; gap: 8px;">
+              <button onclick="restoreBlacklistMember('${m.id}')" class="btn btn-secondary btn-sm" style="padding: 4px 8px; font-size: 0.75rem; color: var(--success); border-color: rgba(5, 150, 105, 0.3);" title="길드원으로 복구">🔄 해제</button>
+              <button onclick="deleteBlacklistPermanently('${m.id}')" class="btn btn-danger btn-sm" style="padding: 4px 8px; font-size: 0.75rem;" title="영구 삭제">🗑️ 삭제</button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }
+  });
+
+  tableBody.innerHTML = html;
+}
+
+// 블랙리스트 해제 및 길드원 복구
+window.restoreBlacklistMember = function(id) {
+  const item = blacklist.find(m => m.id === id);
+  if (!item) return;
+
+  if (confirm(`'${item.battleTag}'님을 블랙리스트에서 해제하고 일반 길드원으로 복구하시겠습니까?`)) {
+    const activeItem = {
+      ...item,
+      id: "member_" + item.battleTag,
+      role: item.role || "member",
+      isSpecial: item.isSpecial || false,
+      warning: item.warning || false,
+      notes: item.notes === "사유 미작성" ? "" : item.notes
+    };
+    
+    delete activeItem.blacklistedDate;
+
+    members.push(activeItem);
+    blacklist = blacklist.filter(m => m.id !== id);
+
+    saveToLocalStorage();
+    saveBlacklistToLocalStorage();
+    updateAppView();
+    showToast(`'${item.battleTag}'님이 블랙리스트에서 해제되어 길드원으로 복구되었습니다.`, 'success');
+  }
+};
+
+// 블랙리스트 영구 삭제
+window.deleteBlacklistPermanently = function(id) {
+  const item = blacklist.find(m => m.id === id);
+  if (!item) return;
+
+  if (confirm(`'${item.battleTag}'님의 블랙리스트 기록을 정말로 영구 삭제하시겠습니까? 이 작업은 복구할 수 없습니다.`)) {
+    blacklist = blacklist.filter(m => m.id !== id);
+    saveBlacklistToLocalStorage();
+    updateAppView();
+    showToast(`'${item.battleTag}'님의 블랙리스트 데이터가 영구 삭제되었습니다.`, 'danger');
+  }
+};
+
+// 블랙리스트 이동 등록
+window.blacklistMember = function(id, source) {
+  let member = null;
+  if (source === 'members') {
+    member = members.find(m => m.id === id);
+  } else if (source === 'departed') {
+    member = departedMembers.find(m => m.id === id);
+  }
+  
+  if (!member) return;
+  
+  if (confirm(`'${member.battleTag}'님을 블랙리스트에 등록하시겠습니까?\n\n이 인원은 모든 목록에서 제외되고 블랙리스트 명단으로 이동됩니다.`)) {
+    const reason = prompt('블랙리스트 사유를 입력해 주세요:', '');
+    if (reason === null) return;
+    
+    const d = new Date();
+    const blacklistedDate = `${String(d.getFullYear()).slice(2)}. ${String(d.getMonth() + 1).padStart(2, '0')}. ${String(d.getDate()).padStart(2, '0')}`;
+    
+    const blacklistItem = {
+      ...member,
+      id: "blacklist_" + member.battleTag,
+      blacklistedDate: blacklistedDate,
+      notes: reason.trim() || "사유 미작성"
+    };
+    
+    blacklist.unshift(blacklistItem);
+    
+    if (source === 'members') {
+      members = members.filter(m => m.id !== id);
+      saveToLocalStorage();
+    } else if (source === 'departed') {
+      departedMembers = departedMembers.filter(m => m.id !== id);
+      saveDepartedToLocalStorage();
+    }
+    
+    saveBlacklistToLocalStorage();
+    updateAppView();
+    showToast(`'${member.battleTag}'님이 블랙리스트에 등록되었습니다.`, 'danger');
+  }
+};
+
+// 블랙리스트 인라인 추가 행 생성
+window.addInlineBlacklistRow = function() {
+  // 이미 추가 중인 임시 행이 있다면 중복 생성 방지
+  if (blacklist.some(m => m.id === 'temp_blacklist_new')) {
+    showToast('이미 작성 중인 블랙리스트 추가 행이 존재합니다.', 'warning');
+    const inputBT = document.getElementById('edit-blacklist-battletag');
+    if (inputBT) inputBT.focus();
+    return;
+  }
+
+  const d = new Date();
+  const blacklistedDate = `${String(d.getFullYear()).slice(2)}. ${String(d.getMonth() + 1).padStart(2, '0')}. ${String(d.getDate()).padStart(2, '0')}`;
+
+  const newItem = {
+    id: "temp_blacklist_new",
+    battleTag: "",
+    kakaoProfile: "",
+    poe2Account: "",
+    blacklistedDate: blacklistedDate,
+    notes: "",
+    isTemp: true
+  };
+
+  blacklist.unshift(newItem);
+  renderBlacklist();
+  
+  // 포커싱
+  setTimeout(() => {
+    const inputBT = document.getElementById('edit-blacklist-battletag');
+    if (inputBT) inputBT.focus();
+  }, 50);
+};
+
+// 인라인 작성 취소
+window.cancelInlineBlacklist = function() {
+  blacklist = blacklist.filter(m => m.id !== 'temp_blacklist_new');
+  renderBlacklist();
+};
+
+// 인라인 작성 저장
+window.saveInlineBlacklist = function() {
+  const battleTagVal = document.getElementById('edit-blacklist-battletag')?.value.trim() || '';
+  const notesVal = document.getElementById('edit-blacklist-notes')?.value.trim() || '';
+
+  if (!battleTagVal) {
+    alert('배틀태그를 입력해 주세요.');
+    return;
+  }
+  if (!battleTagVal.includes('#')) {
+    alert('올바른 배틀태그 형식을 입력해 주세요. (예: 배틀태그#1234)');
+    return;
+  }
+
+  // 중복 확인
+  if (blacklist.some(m => m.battleTag === battleTagVal && m.id !== 'temp_blacklist_new')) {
+    alert('이미 블랙리스트에 등록되어 있는 배틀태그입니다.');
+    return;
+  }
+
+  // 인원 명단에서도 중복 확인
+  if (members.some(m => m.battleTag === battleTagVal)) {
+    if (!confirm('현재 일반 길드원 명단에 존재하는 배틀태그입니다. 그래도 블랙리스트에 새로 등록하시겠습니까?')) {
+      return;
+    }
+  }
+
+  const tempIndex = blacklist.findIndex(m => m.id === 'temp_blacklist_new');
+  if (tempIndex !== -1) {
+    blacklist[tempIndex] = {
+      id: "blacklist_" + battleTagVal,
+      battleTag: battleTagVal,
+      kakaoProfile: "",
+      poe2Account: "",
+      blacklistedDate: blacklist[tempIndex].blacklistedDate,
+      notes: notesVal || "사유 미작성"
+    };
+
+    saveBlacklistToLocalStorage();
+    updateAppView();
+    renderBlacklist();
+    showToast('블랙리스트에 새 인원이 수동 추가되었습니다.', 'success');
   }
 };
 

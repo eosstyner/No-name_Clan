@@ -56,6 +56,7 @@
         <button class="tab-btn active" data-tab="members">👤 길드원 명단</button>
         <button class="tab-btn" data-tab="organization">🌳 길드 조직도</button>
         <button class="tab-btn" data-tab="departed">🥀 탈퇴자 명단</button>
+        <button class="tab-btn" data-tab="blacklist">🚫 블랙리스트</button>
       </div>
 
       <!-- 1. 길드원 명단 탭 콘텐츠 -->
@@ -333,6 +334,47 @@
           <div id="no-departed-view" class="no-data-container" style="display: none;">
             <div class="no-data-icon">🥀</div>
             <h3>탈퇴자 명단이 비어 있습니다.</h3>
+          </div>
+        </section>
+      </div>
+
+      <!-- 4. 블랙리스트 탭 콘텐츠 -->
+      <div id="tab-content-blacklist" class="tab-content">
+        <section class="table-section">
+          <div class="table-header-meta">
+            <div class="list-count-display">
+              블랙리스트 인원: <span id="blacklist-count" class="count-highlight">0</span>명
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center;">
+              <button id="btn-add-blacklist" class="btn btn-primary" style="padding: 6px 12px; font-size: 0.8rem; background: var(--danger); border-color: var(--danger);">➕ 블랙리스트 추가</button>
+              <div class="search-wrapper" style="max-width: 250px; margin-bottom: 0;">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="search-input-blacklist" class="search-input" placeholder="배틀태그 검색...">
+              </div>
+            </div>
+          </div>
+          
+          <div class="table-responsive-wrapper">
+            <table id="blacklist-table" class="premium-table">
+              <thead>
+                <tr>
+                  <th style="width: 50px;">번호</th>
+                  <th style="width: 250px;">배틀태그</th>
+                  <th style="width: 120px;">등록일자</th>
+                  <th>블랙리스트 사유 / 비고</th>
+                  <th style="width: 150px; text-align: center;">관리</th>
+                </tr>
+              </thead>
+              <tbody id="blacklist-table-body">
+                <!-- JS를 통해 동적으로 행이 삽입됩니다 -->
+              </tbody>
+            </table>
+          </div>
+          
+          <!-- 블랙리스트가 없을 때 표시할 빈 영역 -->
+          <div id="no-blacklist-view" class="no-data-container" style="display: none;">
+            <div class="no-data-icon">🚫</div>
+            <h3>블랙리스트로 등록된 인원이 없습니다.</h3>
           </div>
         </section>
       </div>

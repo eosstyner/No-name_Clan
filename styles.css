@@ -799,7 +799,7 @@ body {
 
 .premium-table th {
   background: var(--bg-table-header);
-  padding: 16px;
+  padding: 10px 16px;
   color: var(--text-secondary);
   font-weight: 600;
   border-bottom: 1px solid var(--border-color);
@@ -808,7 +808,7 @@ body {
 }
 
 .premium-table td {
-  padding: 14px 16px;
+  padding: 8px 16px;
   border-bottom: 1px solid var(--border-color);
   color: var(--text-primary);
   vertical-align: middle;
@@ -927,6 +927,15 @@ body {
   display: flex;
   gap: 8px;
   justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.row-actions button,
+.row-actions .btn {
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .row-actions .btn-icon {

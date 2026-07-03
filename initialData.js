@@ -14,7 +14,7 @@ const initialMembers = [
     "inDiscord": true,
     "isSpecial": false,
     "warning": false,
-    "notes": "운영진"
+    "notes": "클랜장"
   },
   {
     "id": "staff_심쏠#3580",
@@ -46,7 +46,7 @@ const initialMembers = [
     "inDiscord": true,
     "isSpecial": false,
     "warning": false,
-    "notes": "클랜장"
+    "notes": "운영진"
   },
   {
     "id": "staff_lastmhc#3740",
@@ -114,7 +114,7 @@ const initialMembers = [
   },
   {
     "id": "new_TopDeck#31392",
-    "no": null,
+    "no": 146,
     "role": "new",
     "battleTag": "TopDeck#31392",
     "kakaoProfile": "",
@@ -130,7 +130,7 @@ const initialMembers = [
   },
   {
     "id": "member_히프노스#31855",
-    "no": 2,
+    "no": 8,
     "role": "member",
     "battleTag": "히프노스#31855",
     "kakaoProfile": "히프노스#31855",
@@ -146,7 +146,7 @@ const initialMembers = [
   },
   {
     "id": "member_shanti#3642",
-    "no": 3,
+    "no": 9,
     "role": "member",
     "battleTag": "shanti#3642",
     "kakaoProfile": "shanti#3642",
@@ -162,7 +162,7 @@ const initialMembers = [
   },
   {
     "id": "member_Dante#3915",
-    "no": 4,
+    "no": 10,
     "role": "member",
     "battleTag": "Dante#3915",
     "kakaoProfile": "단테/Dante#3915",
@@ -178,7 +178,7 @@ const initialMembers = [
   },
   {
     "id": "member_vvip#3322",
-    "no": 5,
+    "no": 11,
     "role": "member",
     "battleTag": "vvip#3322",
     "kakaoProfile": "신긍정/vvip#3322",
@@ -194,7 +194,7 @@ const initialMembers = [
   },
   {
     "id": "member_아토아빠#3934",
-    "no": 6,
+    "no": 12,
     "role": "member",
     "battleTag": "아토아빠#3934",
     "kakaoProfile": "아토아빠#3934",
@@ -210,7 +210,7 @@ const initialMembers = [
   },
   {
     "id": "member_Cube#3445",
-    "no": 7,
+    "no": 13,
     "role": "member",
     "battleTag": "Cube#3445",
     "kakaoProfile": "Cube#3445",
@@ -226,7 +226,7 @@ const initialMembers = [
   },
   {
     "id": "member_NiKeGG#3759",
-    "no": 8,
+    "no": 14,
     "role": "member",
     "battleTag": "NiKeGG#3759",
     "kakaoProfile": "니케/NiKeGG#3759",
@@ -242,7 +242,7 @@ const initialMembers = [
   },
   {
     "id": "member_photoheart#3430",
-    "no": 9,
+    "no": 15,
     "role": "member",
     "battleTag": "photoheart#3430",
     "kakaoProfile": "photoheart#3430",
@@ -258,7 +258,7 @@ const initialMembers = [
   },
   {
     "id": "member_켄지스#3336",
-    "no": 10,
+    "no": 16,
     "role": "member",
     "battleTag": "켄지스#3336",
     "kakaoProfile": "켄지스#3336",
@@ -274,7 +274,7 @@ const initialMembers = [
   },
   {
     "id": "member_킬포그#3531",
-    "no": 11,
+    "no": 17,
     "role": "member",
     "battleTag": "킬포그#3531",
     "kakaoProfile": "킬포그#3531",
@@ -290,7 +290,7 @@ const initialMembers = [
   },
   {
     "id": "member_봄봄#31358",
-    "no": 12,
+    "no": 18,
     "role": "member",
     "battleTag": "봄봄#31358",
     "kakaoProfile": "봄/봄봄#31358",
@@ -306,7 +306,7 @@ const initialMembers = [
   },
   {
     "id": "member_레드불#31210",
-    "no": 13,
+    "no": 19,
     "role": "member",
     "battleTag": "레드불#31210",
     "kakaoProfile": "레드불#31210",
@@ -322,7 +322,7 @@ const initialMembers = [
   },
   {
     "id": "member_khs41218#3140",
-    "no": 14,
+    "no": 20,
     "role": "member",
     "battleTag": "khs41218#3140",
     "kakaoProfile": "khs41218#3140",
@@ -338,7 +338,7 @@ const initialMembers = [
   },
   {
     "id": "member_도와주세요#31191",
-    "no": 15,
+    "no": 21,
     "role": "member",
     "battleTag": "도와주세요#31191",
     "kakaoProfile": "도와주세요/도와주세요#31191",
@@ -354,7 +354,7 @@ const initialMembers = [
   },
   {
     "id": "member_Nikea#3597",
-    "no": 16,
+    "no": 22,
     "role": "member",
     "battleTag": "Nikea#3597",
     "kakaoProfile": "Nikea/Nikea#3597",
@@ -370,7 +370,7 @@ const initialMembers = [
   },
   {
     "id": "member_루로우니#31924",
-    "no": 17,
+    "no": 23,
     "role": "member",
     "battleTag": "루로우니#31924",
     "kakaoProfile": "루로우니#31924",
@@ -386,7 +386,7 @@ const initialMembers = [
   },
   {
     "id": "member_검은베레모#3350",
-    "no": 18,
+    "no": 24,
     "role": "member",
     "battleTag": "검은베레모#3350",
     "kakaoProfile": "검은베레모#3350",
@@ -402,7 +402,7 @@ const initialMembers = [
   },
   {
     "id": "member_나좀치지말아요#3803",
-    "no": 19,
+    "no": 25,
     "role": "member",
     "battleTag": "나좀치지말아요#3803",
     "kakaoProfile": "나좀치지말아요#3803",
@@ -418,7 +418,7 @@ const initialMembers = [
   },
   {
     "id": "member_백련#3724",
-    "no": 20,
+    "no": 26,
     "role": "member",
     "battleTag": "백련#3724",
     "kakaoProfile": "백련#3724",
@@ -434,7 +434,7 @@ const initialMembers = [
   },
   {
     "id": "member_이건뭐야#3868",
-    "no": 21,
+    "no": 27,
     "role": "member",
     "battleTag": "이건뭐야#3868",
     "kakaoProfile": "이건뭐야#3868",
@@ -450,7 +450,7 @@ const initialMembers = [
   },
   {
     "id": "member_패왕색패기123#3208",
-    "no": 22,
+    "no": 28,
     "role": "member",
     "battleTag": "패왕색패기123#3208",
     "kakaoProfile": "패왕색패기123#3208",
@@ -466,7 +466,7 @@ const initialMembers = [
   },
   {
     "id": "member_먼지#3735",
-    "no": 23,
+    "no": 29,
     "role": "member",
     "battleTag": "먼지#3735",
     "kakaoProfile": "먼지#3735",
@@ -482,7 +482,7 @@ const initialMembers = [
   },
   {
     "id": "member_참이슬마셔#3621",
-    "no": 24,
+    "no": 30,
     "role": "member",
     "battleTag": "참이슬마셔#3621",
     "kakaoProfile": "참이슬마셔#3621",
@@ -498,7 +498,7 @@ const initialMembers = [
   },
   {
     "id": "member_써니#32650",
-    "no": 25,
+    "no": 31,
     "role": "member",
     "battleTag": "써니#32650",
     "kakaoProfile": "써니#32650",
@@ -514,7 +514,7 @@ const initialMembers = [
   },
   {
     "id": "member_정직한호랑이#3208",
-    "no": 26,
+    "no": 32,
     "role": "member",
     "battleTag": "정직한호랑이#3208",
     "kakaoProfile": "정직한호랑이#3208",
@@ -530,7 +530,7 @@ const initialMembers = [
   },
   {
     "id": "member_moonriver#3490",
-    "no": 27,
+    "no": 33,
     "role": "member",
     "battleTag": "moonriver#3490",
     "kakaoProfile": "moonriver#3490",
@@ -546,7 +546,7 @@ const initialMembers = [
   },
   {
     "id": "member_윤활유#3245",
-    "no": 28,
+    "no": 34,
     "role": "member",
     "battleTag": "윤활유#3245",
     "kakaoProfile": "배나온어린이/윤활유#3245",
@@ -562,7 +562,7 @@ const initialMembers = [
   },
   {
     "id": "member_djjebi#3556",
-    "no": 29,
+    "no": 35,
     "role": "member",
     "battleTag": "djjebi#3556",
     "kakaoProfile": "가즈아/djjebi#3556",
@@ -578,7 +578,7 @@ const initialMembers = [
   },
   {
     "id": "member_Uarm#3708",
-    "no": 30,
+    "no": 36,
     "role": "member",
     "battleTag": "Uarm#3708",
     "kakaoProfile": "DOTO/Uarm#3708",
@@ -594,7 +594,7 @@ const initialMembers = [
   },
   {
     "id": "member_새벽별#3305",
-    "no": 31,
+    "no": 37,
     "role": "member",
     "battleTag": "새벽별#3305",
     "kakaoProfile": "새벽별/#3305",
@@ -610,7 +610,7 @@ const initialMembers = [
   },
   {
     "id": "member_Summit#3602",
-    "no": 32,
+    "no": 38,
     "role": "member",
     "battleTag": "Summit#3602",
     "kakaoProfile": "이유/Summit#3602",
@@ -626,7 +626,7 @@ const initialMembers = [
   },
   {
     "id": "member_네네#3467",
-    "no": 33,
+    "no": 39,
     "role": "member",
     "battleTag": "네네#3467",
     "kakaoProfile": "네네#3467",
@@ -642,7 +642,7 @@ const initialMembers = [
   },
   {
     "id": "member_sasin#31630",
-    "no": 34,
+    "no": 40,
     "role": "member",
     "battleTag": "sasin#31630",
     "kakaoProfile": "붸붸/sasin#31630",
@@ -658,7 +658,7 @@ const initialMembers = [
   },
   {
     "id": "member_블루스카이#3264",
-    "no": 35,
+    "no": 41,
     "role": "member",
     "battleTag": "블루스카이#3264",
     "kakaoProfile": "블루스카이#3264",
@@ -674,7 +674,7 @@ const initialMembers = [
   },
   {
     "id": "member_qho#3326",
-    "no": 36,
+    "no": 42,
     "role": "member",
     "battleTag": "qho#3326",
     "kakaoProfile": "나그네/qho#3326",
@@ -690,7 +690,7 @@ const initialMembers = [
   },
   {
     "id": "member_SOJU#3297",
-    "no": 37,
+    "no": 43,
     "role": "member",
     "battleTag": "SOJU#3297",
     "kakaoProfile": "소주/SOJU#3297",
@@ -706,7 +706,7 @@ const initialMembers = [
   },
   {
     "id": "member_minhowow#11711",
-    "no": 38,
+    "no": 44,
     "role": "member",
     "battleTag": "minhowow#11711",
     "kakaoProfile": "칸쿤/minhowow#11711",
@@ -722,7 +722,7 @@ const initialMembers = [
   },
   {
     "id": "member_M4X#3722",
-    "no": 39,
+    "no": 45,
     "role": "member",
     "battleTag": "M4X#3722",
     "kakaoProfile": "음바페/M4X#3722",
@@ -738,7 +738,7 @@ const initialMembers = [
   },
   {
     "id": "member_나간다다#3991",
-    "no": 40,
+    "no": 46,
     "role": "member",
     "battleTag": "나간다다#3991",
     "kakaoProfile": "나간다다#3991",
@@ -754,7 +754,7 @@ const initialMembers = [
   },
   {
     "id": "member_별내키다리#3807",
-    "no": 41,
+    "no": 47,
     "role": "member",
     "battleTag": "별내키다리#3807",
     "kakaoProfile": "별내키다리#3807",
@@ -770,7 +770,7 @@ const initialMembers = [
   },
   {
     "id": "member_Yondue#3827",
-    "no": 42,
+    "no": 48,
     "role": "member",
     "battleTag": "Yondue#3827",
     "kakaoProfile": "욘두/Yondue#3827",
@@ -786,7 +786,7 @@ const initialMembers = [
   },
   {
     "id": "member_JongBal#3184",
-    "no": 43,
+    "no": 49,
     "role": "member",
     "battleTag": "JongBal#3184",
     "kakaoProfile": "JongBal#3184",
@@ -802,7 +802,7 @@ const initialMembers = [
   },
   {
     "id": "member_앵그리츄츄#3671",
-    "no": 44,
+    "no": 50,
     "role": "member",
     "battleTag": "앵그리츄츄#3671",
     "kakaoProfile": "앵그리츄츄#3671",
@@ -818,7 +818,7 @@ const initialMembers = [
   },
   {
     "id": "member_kimura119D#1519",
-    "no": 45,
+    "no": 51,
     "role": "member",
     "battleTag": "kimura119D#1519",
     "kakaoProfile": "kimura119D#1519",
@@ -834,7 +834,7 @@ const initialMembers = [
   },
   {
     "id": "member_Damsoo#3782",
-    "no": 46,
+    "no": 52,
     "role": "member",
     "battleTag": "Damsoo#3782",
     "kakaoProfile": "유령/gus1333#1407",
@@ -850,7 +850,7 @@ const initialMembers = [
   },
   {
     "id": "member_BBAMSAE#3277",
-    "no": 47,
+    "no": 53,
     "role": "member",
     "battleTag": "BBAMSAE#3277",
     "kakaoProfile": "BBAMSAE#3277",
@@ -866,7 +866,7 @@ const initialMembers = [
   },
   {
     "id": "member_빠나나쿤#3776",
-    "no": 48,
+    "no": 54,
     "role": "member",
     "battleTag": "빠나나쿤#3776",
     "kakaoProfile": "빠나나쿤#3776",
@@ -882,7 +882,7 @@ const initialMembers = [
   },
   {
     "id": "member_테야샤#3992",
-    "no": 49,
+    "no": 55,
     "role": "member",
     "battleTag": "테야샤#3992",
     "kakaoProfile": "테야샤#3992",
@@ -898,7 +898,7 @@ const initialMembers = [
   },
   {
     "id": "member_꼬비#31858",
-    "no": 50,
+    "no": 56,
     "role": "member",
     "battleTag": "꼬비#31858",
     "kakaoProfile": "꼬비#31858",
@@ -914,7 +914,7 @@ const initialMembers = [
   },
   {
     "id": "member_죽으ㅁ#3437",
-    "no": 51,
+    "no": 57,
     "role": "member",
     "battleTag": "죽으ㅁ#3437",
     "kakaoProfile": "죽으ㅁ#3437",
@@ -930,7 +930,7 @@ const initialMembers = [
   },
   {
     "id": "member_푸른카라#3335",
-    "no": 52,
+    "no": 58,
     "role": "member",
     "battleTag": "푸른카라#3335",
     "kakaoProfile": "푸른카라#3335",
@@ -946,7 +946,7 @@ const initialMembers = [
   },
   {
     "id": "member_영혼의서사#3738",
-    "no": 53,
+    "no": 59,
     "role": "member",
     "battleTag": "영혼의서사#3738",
     "kakaoProfile": "영혼의서사#3738",
@@ -962,7 +962,7 @@ const initialMembers = [
   },
   {
     "id": "member_ALLBlacks#11259",
-    "no": 54,
+    "no": 60,
     "role": "member",
     "battleTag": "ALLBlacks#11259",
     "kakaoProfile": "ALLBlacks#11259",
@@ -978,7 +978,7 @@ const initialMembers = [
   },
   {
     "id": "member_눈물패밀리#3118",
-    "no": 55,
+    "no": 61,
     "role": "member",
     "battleTag": "눈물패밀리#3118",
     "kakaoProfile": "예쁜눈물/눈물패밀리#3118",
@@ -994,7 +994,7 @@ const initialMembers = [
   },
   {
     "id": "member_싸팍#31586",
-    "no": 56,
+    "no": 62,
     "role": "member",
     "battleTag": "싸팍#31586",
     "kakaoProfile": "싸팍#31586",
@@ -1010,7 +1010,7 @@ const initialMembers = [
   },
   {
     "id": "member_ASURA#3322",
-    "no": 57,
+    "no": 63,
     "role": "member",
     "battleTag": "ASURA#3322",
     "kakaoProfile": "ASURA#3322",
@@ -1026,7 +1026,7 @@ const initialMembers = [
   },
   {
     "id": "member_나트넬#3595",
-    "no": 58,
+    "no": 64,
     "role": "member",
     "battleTag": "나트넬#3595",
     "kakaoProfile": "나트넬#3595",
@@ -1042,7 +1042,7 @@ const initialMembers = [
   },
   {
     "id": "member_청류가인#3929",
-    "no": 59,
+    "no": 65,
     "role": "member",
     "battleTag": "청류가인#3929",
     "kakaoProfile": "청류가인#3929",
@@ -1058,7 +1058,7 @@ const initialMembers = [
   },
   {
     "id": "member_개미#32730",
-    "no": 60,
+    "no": 66,
     "role": "member",
     "battleTag": "개미#32730",
     "kakaoProfile": "개미#32730",
@@ -1074,7 +1074,7 @@ const initialMembers = [
   },
   {
     "id": "member_디바#3223",
-    "no": 61,
+    "no": 67,
     "role": "member",
     "battleTag": "디바#3223",
     "kakaoProfile": "디바#3223",
@@ -1090,7 +1090,7 @@ const initialMembers = [
   },
   {
     "id": "member_척살상어#3718",
-    "no": 62,
+    "no": 68,
     "role": "member",
     "battleTag": "척살상어#3718",
     "kakaoProfile": "척살상어#3718",
@@ -1106,7 +1106,7 @@ const initialMembers = [
   },
   {
     "id": "member_커먼#3127",
-    "no": 63,
+    "no": 69,
     "role": "member",
     "battleTag": "커먼#3127",
     "kakaoProfile": "커먼#3127",
@@ -1122,7 +1122,7 @@ const initialMembers = [
   },
   {
     "id": "member_vvon#31293",
-    "no": 64,
+    "no": 70,
     "role": "member",
     "battleTag": "vvon#31293",
     "kakaoProfile": "vvon#31293",
@@ -1138,7 +1138,7 @@ const initialMembers = [
   },
   {
     "id": "member_오리#33310",
-    "no": 65,
+    "no": 71,
     "role": "member",
     "battleTag": "오리#33310",
     "kakaoProfile": "오리#33310",
@@ -1154,7 +1154,7 @@ const initialMembers = [
   },
   {
     "id": "member_bullet#31903",
-    "no": 66,
+    "no": 72,
     "role": "member",
     "battleTag": "bullet#31903",
     "kakaoProfile": "bullet#31903",
@@ -1170,7 +1170,7 @@ const initialMembers = [
   },
   {
     "id": "member_kyuri#3455",
-    "no": 67,
+    "no": 73,
     "role": "member",
     "battleTag": "kyuri#3455",
     "kakaoProfile": "kyuri#3455",
@@ -1186,7 +1186,7 @@ const initialMembers = [
   },
   {
     "id": "member_Mango#3747",
-    "no": 68,
+    "no": 74,
     "role": "member",
     "battleTag": "Mango#3747",
     "kakaoProfile": "Mango#3747",
@@ -1202,7 +1202,7 @@ const initialMembers = [
   },
   {
     "id": "member_maximum#3162",
-    "no": 69,
+    "no": 75,
     "role": "member",
     "battleTag": "maximum#3162",
     "kakaoProfile": "maximum#3162",
@@ -1218,7 +1218,7 @@ const initialMembers = [
   },
   {
     "id": "member_skrety#3212",
-    "no": 70,
+    "no": 76,
     "role": "member",
     "battleTag": "skrety#3212",
     "kakaoProfile": "고르마딘/skrety#3212",
@@ -1234,7 +1234,7 @@ const initialMembers = [
   },
   {
     "id": "member_마검사지롱#3764",
-    "no": 71,
+    "no": 77,
     "role": "member",
     "battleTag": "마검사지롱#3764",
     "kakaoProfile": "난폭한미남/마검사지롱#3764",
@@ -1250,7 +1250,7 @@ const initialMembers = [
   },
   {
     "id": "member_Orochi#31630",
-    "no": 72,
+    "no": 78,
     "role": "member",
     "battleTag": "Orochi#31630",
     "kakaoProfile": "로치/Orochi#31630",
@@ -1266,7 +1266,7 @@ const initialMembers = [
   },
   {
     "id": "member_가브리엘#3105",
-    "no": 73,
+    "no": 79,
     "role": "member",
     "battleTag": "가브리엘#3105",
     "kakaoProfile": "가브리엘#3105",
@@ -1282,7 +1282,7 @@ const initialMembers = [
   },
   {
     "id": "member_옴집사#390",
-    "no": 74,
+    "no": 80,
     "role": "member",
     "battleTag": "옴집사#390",
     "kakaoProfile": "옴집사#390",
@@ -1298,7 +1298,7 @@ const initialMembers = [
   },
   {
     "id": "member_PNUCDC#3540",
-    "no": 75,
+    "no": 81,
     "role": "member",
     "battleTag": "PNUCDC#3540",
     "kakaoProfile": "PNUCDC#3540",
@@ -1314,7 +1314,7 @@ const initialMembers = [
   },
   {
     "id": "member_도로로#31407",
-    "no": 76,
+    "no": 82,
     "role": "member",
     "battleTag": "도로로#31407",
     "kakaoProfile": "도로로#31407",
@@ -1330,7 +1330,7 @@ const initialMembers = [
   },
   {
     "id": "member_커비팬티도둑#3323",
-    "no": 77,
+    "no": 83,
     "role": "member",
     "battleTag": "커비팬티도둑#3323",
     "kakaoProfile": "커비팬티도둑#3323",
@@ -1346,7 +1346,7 @@ const initialMembers = [
   },
   {
     "id": "member_시간과기억사이#3894",
-    "no": 78,
+    "no": 84,
     "role": "member",
     "battleTag": "시간과기억사이#3894",
     "kakaoProfile": "시간과기억사이#3894",
@@ -1362,7 +1362,7 @@ const initialMembers = [
   },
   {
     "id": "member_헝그리복서#31618",
-    "no": 79,
+    "no": 85,
     "role": "member",
     "battleTag": "헝그리복서#31618",
     "kakaoProfile": "헝그리복서#31618",
@@ -1378,7 +1378,7 @@ const initialMembers = [
   },
   {
     "id": "member_버키#32321",
-    "no": 80,
+    "no": 86,
     "role": "member",
     "battleTag": "버키#32321",
     "kakaoProfile": "버키#32321",
@@ -1394,7 +1394,7 @@ const initialMembers = [
   },
   {
     "id": "member_코니#31376",
-    "no": 81,
+    "no": 87,
     "role": "member",
     "battleTag": "코니#31376",
     "kakaoProfile": "코니#31376",
@@ -1410,7 +1410,7 @@ const initialMembers = [
   },
   {
     "id": "member_옥령사/옥수수#3221",
-    "no": 82,
+    "no": 88,
     "role": "member",
     "battleTag": "옥령사/옥수수#3221",
     "kakaoProfile": "옥수수#3221",
@@ -1426,7 +1426,7 @@ const initialMembers = [
   },
   {
     "id": "member_고양이는멍멍#31973",
-    "no": 83,
+    "no": 89,
     "role": "member",
     "battleTag": "고양이는멍멍#31973",
     "kakaoProfile": "고양이는멍멍#31973",
@@ -1442,7 +1442,7 @@ const initialMembers = [
   },
   {
     "id": "member_LucaPark/박광식#3366",
-    "no": 84,
+    "no": 90,
     "role": "member",
     "battleTag": "LucaPark/박광식#3366",
     "kakaoProfile": "LucaPark/박광식#3366",
@@ -1458,7 +1458,7 @@ const initialMembers = [
   },
   {
     "id": "member_이계진#31893",
-    "no": 85,
+    "no": 91,
     "role": "member",
     "battleTag": "이계진#31893",
     "kakaoProfile": "이계진#31893",
@@ -1474,7 +1474,7 @@ const initialMembers = [
   },
   {
     "id": "member_안드리쉡첸/GoldSheVa#3867",
-    "no": 86,
+    "no": 92,
     "role": "member",
     "battleTag": "안드리쉡첸/GoldSheVa#3867",
     "kakaoProfile": "안드리쉡첸/GoldSheVa#3867",
@@ -1490,7 +1490,7 @@ const initialMembers = [
   },
   {
     "id": "member_zuku#3146",
-    "no": 87,
+    "no": 93,
     "role": "member",
     "battleTag": "zuku#3146",
     "kakaoProfile": "랑헝/zuku#3146",
@@ -1506,7 +1506,7 @@ const initialMembers = [
   },
   {
     "id": "member_적룡#32187",
-    "no": 88,
+    "no": 94,
     "role": "member",
     "battleTag": "적룡#32187",
     "kakaoProfile": "적룡#32187",
@@ -1522,7 +1522,7 @@ const initialMembers = [
   },
   {
     "id": "member_박간지#3532",
-    "no": 89,
+    "no": 95,
     "role": "member",
     "battleTag": "박간지#3532",
     "kakaoProfile": "박간지#3532",
@@ -1538,7 +1538,7 @@ const initialMembers = [
   },
   {
     "id": "member_이브#31619",
-    "no": 90,
+    "no": 96,
     "role": "member",
     "battleTag": "이브#31619",
     "kakaoProfile": "이브#31619",
@@ -1554,7 +1554,7 @@ const initialMembers = [
   },
   {
     "id": "member_너구리#33119",
-    "no": 91,
+    "no": 97,
     "role": "member",
     "battleTag": "너구리#33119",
     "kakaoProfile": "왕/너구리#33119",
@@ -1570,7 +1570,7 @@ const initialMembers = [
   },
   {
     "id": "member_늙은사람#31247",
-    "no": 92,
+    "no": 98,
     "role": "member",
     "battleTag": "늙은사람#31247",
     "kakaoProfile": "늙은사람#31247",
@@ -1586,7 +1586,7 @@ const initialMembers = [
   },
   {
     "id": "member_wooil2#3231",
-    "no": 93,
+    "no": 99,
     "role": "member",
     "battleTag": "wooil2#3231",
     "kakaoProfile": "wooil2#3231",
@@ -1602,7 +1602,7 @@ const initialMembers = [
   },
   {
     "id": "member_정많은한국인#3265",
-    "no": 94,
+    "no": 100,
     "role": "member",
     "battleTag": "정많은한국인#3265",
     "kakaoProfile": "마불/정많은한국인#3265",
@@ -1618,7 +1618,7 @@ const initialMembers = [
   },
   {
     "id": "member_AngelHeart#3932",
-    "no": 95,
+    "no": 101,
     "role": "member",
     "battleTag": "AngelHeart#3932",
     "kakaoProfile": "AngelHeart#3932",
@@ -1634,7 +1634,7 @@ const initialMembers = [
   },
   {
     "id": "member_별헤는밤#31264",
-    "no": 96,
+    "no": 102,
     "role": "member",
     "battleTag": "별헤는밤#31264",
     "kakaoProfile": "별헤는밤#31264",
@@ -1650,7 +1650,7 @@ const initialMembers = [
   },
   {
     "id": "member_Maven#3877",
-    "no": 97,
+    "no": 103,
     "role": "member",
     "battleTag": "Maven#3877",
     "kakaoProfile": "Maven#3877",
@@ -1666,7 +1666,7 @@ const initialMembers = [
   },
   {
     "id": "member_Globalkv#3153",
-    "no": 98,
+    "no": 104,
     "role": "member",
     "battleTag": "Globalkv#3153",
     "kakaoProfile": "Globalkv#3153",
@@ -1682,7 +1682,7 @@ const initialMembers = [
   },
   {
     "id": "member_마크툽#31742",
-    "no": 99,
+    "no": 105,
     "role": "member",
     "battleTag": "마크툽#31742",
     "kakaoProfile": "마크툽#31742",
@@ -1698,7 +1698,7 @@ const initialMembers = [
   },
   {
     "id": "member_LarsJsYim#3626",
-    "no": 100,
+    "no": 106,
     "role": "member",
     "battleTag": "LarsJsYim#3626",
     "kakaoProfile": "LarsJsYim#3626",
@@ -1714,7 +1714,7 @@ const initialMembers = [
   },
   {
     "id": "member_압도적#31998",
-    "no": 101,
+    "no": 107,
     "role": "member",
     "battleTag": "압도적#31998",
     "kakaoProfile": "압도적#31998",
@@ -1730,7 +1730,7 @@ const initialMembers = [
   },
   {
     "id": "member_레인져#3504",
-    "no": 102,
+    "no": 108,
     "role": "member",
     "battleTag": "레인져#3504",
     "kakaoProfile": "레인져#3504",
@@ -1746,7 +1746,7 @@ const initialMembers = [
   },
   {
     "id": "member_THOMYORKE#3919",
-    "no": 103,
+    "no": 109,
     "role": "member",
     "battleTag": "THOMYORKE#3919",
     "kakaoProfile": "THOMYORKE#3919",
@@ -1762,7 +1762,7 @@ const initialMembers = [
   },
   {
     "id": "member_엉큼한엉덩이#3727",
-    "no": 104,
+    "no": 110,
     "role": "member",
     "battleTag": "엉큼한엉덩이#3727",
     "kakaoProfile": "엉크ㅁ한어ㅇ덩이#3727",
@@ -1778,7 +1778,7 @@ const initialMembers = [
   },
   {
     "id": "member_함도#3725",
-    "no": 105,
+    "no": 111,
     "role": "member",
     "battleTag": "함도#3725",
     "kakaoProfile": "함도#3725",
@@ -1794,7 +1794,7 @@ const initialMembers = [
   },
   {
     "id": "member_주몽#31336",
-    "no": 106,
+    "no": 112,
     "role": "member",
     "battleTag": "주몽#31336",
     "kakaoProfile": "에리히/주몽#31336",
@@ -1810,7 +1810,7 @@ const initialMembers = [
   },
   {
     "id": "member_카토신자#3795",
-    "no": 107,
+    "no": 113,
     "role": "member",
     "battleTag": "카토신자#3795",
     "kakaoProfile": "카토신자#3795",
@@ -1826,7 +1826,7 @@ const initialMembers = [
   },
   {
     "id": "member_알이즈웰#31879",
-    "no": 108,
+    "no": 114,
     "role": "member",
     "battleTag": "알이즈웰#31879",
     "kakaoProfile": "알이즈웰#31879",
@@ -1842,7 +1842,7 @@ const initialMembers = [
   },
   {
     "id": "member_choas#3491",
-    "no": 109,
+    "no": 115,
     "role": "member",
     "battleTag": "choas#3491",
     "kakaoProfile": "choas#3491",
@@ -1858,7 +1858,7 @@ const initialMembers = [
   },
   {
     "id": "member_데자크#3617",
-    "no": 110,
+    "no": 116,
     "role": "member",
     "battleTag": "데자크#3617",
     "kakaoProfile": "데자크#3617",
@@ -1874,7 +1874,7 @@ const initialMembers = [
   },
   {
     "id": "member_엘페퍼#3531",
-    "no": 111,
+    "no": 117,
     "role": "member",
     "battleTag": "엘페퍼#3531",
     "kakaoProfile": "엘페퍼#3531",
@@ -1890,7 +1890,7 @@ const initialMembers = [
   },
   {
     "id": "member_박증훈동생#3623",
-    "no": 112,
+    "no": 118,
     "role": "member",
     "battleTag": "박증훈동생#3623",
     "kakaoProfile": "박증훈동생#3623",
@@ -1906,7 +1906,7 @@ const initialMembers = [
   },
   {
     "id": "member_행복한발바닥#324990",
-    "no": 113,
+    "no": 119,
     "role": "member",
     "battleTag": "행복한발바닥#324990",
     "kakaoProfile": "행복한발바닥#324990",
@@ -1922,7 +1922,7 @@ const initialMembers = [
   },
   {
     "id": "member_TopDeck#31392",
-    "no": 114,
+    "no": 120,
     "role": "member",
     "battleTag": "TopDeck#31392",
     "kakaoProfile": "TopDeck#31392",
@@ -1938,7 +1938,7 @@ const initialMembers = [
   },
   {
     "id": "member_나크메션#3889",
-    "no": 115,
+    "no": 121,
     "role": "member",
     "battleTag": "나크메션#3889",
     "kakaoProfile": "나크메션#3889",
@@ -1954,7 +1954,7 @@ const initialMembers = [
   },
   {
     "id": "member_쪼오코볼#3795",
-    "no": 116,
+    "no": 122,
     "role": "member",
     "battleTag": "쪼오코볼#3795",
     "kakaoProfile": "쪼오코볼#3795",
@@ -1970,7 +1970,7 @@ const initialMembers = [
   },
   {
     "id": "member_킹갓엠퍼러한조#3509",
-    "no": 117,
+    "no": 123,
     "role": "member",
     "battleTag": "킹갓엠퍼러한조#3509",
     "kakaoProfile": "생존왕김졸렬/킹갓엠퍼러한조#3509",
@@ -1986,7 +1986,7 @@ const initialMembers = [
   },
   {
     "id": "member_너무나도많이#3713",
-    "no": 118,
+    "no": 124,
     "role": "member",
     "battleTag": "너무나도많이#3713",
     "kakaoProfile": "너무나도많이#3713",
@@ -2002,7 +2002,7 @@ const initialMembers = [
   },
   {
     "id": "member_구름구름#31539",
-    "no": 119,
+    "no": 125,
     "role": "member",
     "battleTag": "구름구름#31539",
     "kakaoProfile": "구름구름#31539",
@@ -2018,7 +2018,7 @@ const initialMembers = [
   },
   {
     "id": "member_돈많은부엉이#3638",
-    "no": 120,
+    "no": 126,
     "role": "member",
     "battleTag": "돈많은부엉이#3638",
     "kakaoProfile": "돈많은부엉이#3638",
@@ -2034,7 +2034,7 @@ const initialMembers = [
   },
   {
     "id": "member_체리여우#3855",
-    "no": 121,
+    "no": 127,
     "role": "member",
     "battleTag": "체리여우#3855",
     "kakaoProfile": "체리여우#3855",
@@ -2050,7 +2050,7 @@ const initialMembers = [
   },
   {
     "id": "member_HoIron#3719",
-    "no": 122,
+    "no": 128,
     "role": "member",
     "battleTag": "HoIron#3719",
     "kakaoProfile": "철바바/HoIron#3719",
@@ -2066,7 +2066,7 @@ const initialMembers = [
   },
   {
     "id": "member_sizz#31447",
-    "no": 123,
+    "no": 129,
     "role": "member",
     "battleTag": "sizz#31447",
     "kakaoProfile": "sizz#31447(일하기시러)",
@@ -2082,7 +2082,7 @@ const initialMembers = [
   },
   {
     "id": "member_메타몽#31136",
-    "no": 124,
+    "no": 130,
     "role": "member",
     "battleTag": "메타몽#31136",
     "kakaoProfile": "메타몽#31136",
@@ -2098,7 +2098,7 @@ const initialMembers = [
   },
   {
     "id": "member_스톰#31545",
-    "no": 125,
+    "no": 131,
     "role": "member",
     "battleTag": "스톰#31545",
     "kakaoProfile": "스톰#31545",
@@ -2114,7 +2114,7 @@ const initialMembers = [
   },
   {
     "id": "member_louder#31700",
-    "no": 126,
+    "no": 132,
     "role": "member",
     "battleTag": "louder#31700",
     "kakaoProfile": "louder#31700",
@@ -2130,7 +2130,7 @@ const initialMembers = [
   },
   {
     "id": "member_허영의오팔황소#31745",
-    "no": 127,
+    "no": 133,
     "role": "member",
     "battleTag": "허영의오팔황소#31745",
     "kakaoProfile": "허영의오팔황소#31745",
@@ -2146,7 +2146,7 @@ const initialMembers = [
   },
   {
     "id": "member_ECO#31378",
-    "no": 128,
+    "no": 134,
     "role": "member",
     "battleTag": "ECO#31378",
     "kakaoProfile": "ECO#31378",
@@ -2162,7 +2162,7 @@ const initialMembers = [
   },
   {
     "id": "member_튜링#31176",
-    "no": 129,
+    "no": 135,
     "role": "member",
     "battleTag": "튜링#31176",
     "kakaoProfile": "튜링#31176",
@@ -2178,7 +2178,7 @@ const initialMembers = [
   },
   {
     "id": "member_민달#3981",
-    "no": 130,
+    "no": 136,
     "role": "member",
     "battleTag": "민달#3981",
     "kakaoProfile": "민달#3981",
@@ -2194,7 +2194,7 @@ const initialMembers = [
   },
   {
     "id": "member_격투#31347",
-    "no": 131,
+    "no": 137,
     "role": "member",
     "battleTag": "격투#31347",
     "kakaoProfile": "격투#31347",
@@ -2210,7 +2210,7 @@ const initialMembers = [
   },
   {
     "id": "member_제국#3665",
-    "no": 132,
+    "no": 138,
     "role": "member",
     "battleTag": "제국#3665",
     "kakaoProfile": "제국#3665",
@@ -2226,7 +2226,7 @@ const initialMembers = [
   },
   {
     "id": "member_버클리건축#3968",
-    "no": 133,
+    "no": 139,
     "role": "member",
     "battleTag": "버클리건축#3968",
     "kakaoProfile": "버클리건축#3968",
@@ -2242,7 +2242,7 @@ const initialMembers = [
   },
   {
     "id": "member_Kusuha#3366",
-    "no": 134,
+    "no": 140,
     "role": "member",
     "battleTag": "Kusuha#3366",
     "kakaoProfile": "난주/Kusuha#3366",
@@ -2258,7 +2258,7 @@ const initialMembers = [
   },
   {
     "id": "member_유혼#31394",
-    "no": 135,
+    "no": 141,
     "role": "member",
     "battleTag": "유혼#31394",
     "kakaoProfile": "유혼#31394",
@@ -2274,7 +2274,7 @@ const initialMembers = [
   },
   {
     "id": "member_goodjob#31855",
-    "no": 136,
+    "no": 142,
     "role": "member",
     "battleTag": "goodjob#31855",
     "kakaoProfile": "goodjob#31855",
@@ -2290,7 +2290,7 @@ const initialMembers = [
   },
   {
     "id": "member_MainHealer#3512",
-    "no": 137,
+    "no": 143,
     "role": "member",
     "battleTag": "MainHealer#3512",
     "kakaoProfile": "해달/MainHealer#3512",
@@ -2306,7 +2306,7 @@ const initialMembers = [
   },
   {
     "id": "member_우쿠리#3196",
-    "no": 138,
+    "no": 144,
     "role": "member",
     "battleTag": "우쿠리#3196",
     "kakaoProfile": "우쿠리#3196",
@@ -2322,7 +2322,7 @@ const initialMembers = [
   },
   {
     "id": "member_NeverStop#31755",
-    "no": 139,
+    "no": 145,
     "role": "member",
     "battleTag": "NeverStop#31755",
     "kakaoProfile": "아빈/NeverStop#31755",
