@@ -812,6 +812,7 @@ body {
   border-bottom: 1px solid var(--border-color);
   color: var(--text-primary);
   vertical-align: middle;
+  white-space: nowrap;
 }
 
 .premium-table tbody tr {
