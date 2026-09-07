@@ -1657,16 +1657,6 @@ function registerEventListeners() {
       showToast('경고 대상자만 필터링되었습니다.', 'warning');
     });
   }
-
-  // 테이블 헤더 컬럼 클릭 시 오름차순/내림차순 정렬 이벤트 바인딩
-  document.querySelectorAll('#members-table th.sortable-th').forEach(th => {
-    th.addEventListener('click', () => {
-      const field = th.dataset.field;
-      if (field) {
-        sortByField(field);
-      }
-    });
-  });
 }
 
 // 탭 전환 기능
@@ -2133,51 +2123,80 @@ function updateSortHeaderUI() {
     }
   });
 
-  // 상단 번호 정렬 토글 버튼 텍스트도 상태에 맞춰 친절하게 변경
-  const btn = document.getElementById('btn-toggle-sort');
-  if (btn) {
+  const btnToggle = document.getElementById('btn-toggle-sort');
+  const btnReset = document.getElementById('btn-reset-sort');
+
+  const fieldNames = {
+    'no': '번호', 'role': '구분', 'battleTag': '배틀태그', 'kakaoProfile': '카톡 프로필',
+    'poe2Account': 'POE2 계정', 'joinDate': '가입일', 'chatCount': '단톡횟수',
+    'inClan': '클랜', 'inKakao': '카톡', 'inDiscord': '디코',
+    'isSpecial': '특별', 'warning': '경고', 'notes': '비고'
+  };
+
+  if (btnToggle) {
     if (currentSortField === 'no') {
-      btn.innerHTML = currentSortDirection === 'asc' ? '⇅ 번호 역순으로 보기' : '⇅ 번호 정순으로 보기';
-      btn.title = "정렬 방향을 정순/역순으로 전환합니다.";
+      btnToggle.innerHTML = currentSortDirection === 'asc' ? '⇅ 번호 역순(내림차순)으로 보기' : '⇅ 번호 정순(오름차순)으로 보기';
+      btnToggle.title = "번호 정렬 방향을 오름차순/내림차순으로 전환합니다.";
     } else {
-      const fieldNames = {
-        'role': '구분', 'battleTag': '배틀태그', 'kakaoProfile': '카톡 프로필',
-        'poe2Account': 'POE2 계정', 'joinDate': '가입일', 'chatCount': '단톡횟수',
-        'inClan': '클랜', 'inKakao': '카톡', 'inDiscord': '디코',
-        'isSpecial': '특별', 'warning': '경고', 'notes': '비고'
-      };
-      const dirName = currentSortDirection === 'asc' ? '오름차순' : '내림차순';
-      btn.innerHTML = `↺ 기본 정렬로 복귀 (${fieldNames[currentSortField] || currentSortField} ${dirName} 중)`;
-      btn.title = "클릭 시 기본 번호 정순으로 초기화합니다.";
+      const curName = fieldNames[currentSortField] || currentSortField;
+      const nextDirName = currentSortDirection === 'asc' ? '내림차순' : '오름차순';
+      const curIcon = currentSortDirection === 'asc' ? '▲' : '▼';
+      btnToggle.innerHTML = `⇅ ${curName} ${nextDirName}으로 전환 (현재: ${curIcon})`;
+      btnToggle.title = `현재 선택된 [${curName}]의 정렬 방향을 반대로 전환합니다.`;
+    }
+  }
+
+  if (btnReset) {
+    if (currentSortField !== 'no') {
+      btnReset.style.display = 'inline-flex';
+    } else {
+      btnReset.style.display = 'none';
     }
   }
 }
 
-// 특정 컬럼 클릭 시 정렬 (오름차순 <-> 내림차순 토글)
+let lastSortClickTime = 0;
+let lastSortField = '';
+
+// 특정 컬럼 클릭 시 정렬 (첫 클릭: 오름차순 ▲, 두 번째 클릭: 내림차순 ▼)
 window.sortByField = function(field) {
+  const now = Date.now();
+  if (now - lastSortClickTime < 200 && lastSortField === field) {
+    return; // 중복 이벤트 호출 방지
+  }
+  lastSortClickTime = now;
+  lastSortField = field;
+
   if (currentSortField === field) {
+    // 같은 컬럼 재클릭 시 오름차순 <-> 내림차순 토글
     currentSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
   } else {
+    // 새로운 컬럼 클릭 시 기본 오름차순(▲)으로 시작
     currentSortField = field;
-    // 단톡 횟수나 경고는 많은/대상자가 먼저 나오는 것이 직관적이므로 내림차순(desc)으로 시작, 나머지는 오름차순(asc)
-    currentSortDirection = (field === 'chatCount' || field === 'warning') ? 'desc' : 'asc';
+    currentSortDirection = 'asc';
   }
+
   sortDirection = currentSortDirection;
   updateSortHeaderUI();
   applyFiltersAndRender();
 };
 
-// 상단 버튼용: 번호 기준 정순 <-> 역순 토글 (다른 컬럼 정렬 중일 경우 번호 기본순으로 복귀)
+// 상단 버튼: 현재 정렬된 컬럼의 정렬 방향 토글 (오름차순 <-> 내림차순)
 window.toggleSortDirection = function() {
-  if (currentSortField !== 'no') {
-    currentSortField = 'no';
-    currentSortDirection = 'asc';
-  } else {
-    currentSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
-  }
+  currentSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
   sortDirection = currentSortDirection;
   updateSortHeaderUI();
   applyFiltersAndRender();
+};
+
+// 상단 버튼: 기본 번호순 정렬(오름차순)로 초기화
+window.resetSortToDefault = function() {
+  currentSortField = 'no';
+  currentSortDirection = 'asc';
+  sortDirection = currentSortDirection;
+  updateSortHeaderUI();
+  applyFiltersAndRender();
+  showToast('기본 번호 순서(오름차순)로 정렬이 초기화되었습니다.', 'info');
 };
 
 // 디바운스 헬퍼 함수 (검색 시 과도한 DOM 쓰기 방지)
