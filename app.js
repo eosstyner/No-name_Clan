@@ -1213,68 +1213,65 @@ function handleKakaoFile(e) {
     const matchDetails = [];
     const matchedKeys = new Set();
 
+    // 단톡 발송자 닉네임과 길드원 매칭 검사 헬퍼 함수
+    function isSenderMatch(cleanKey, keyParts, member) {
+      const profile = (member.kakaoProfile || '').toLowerCase().trim();
+      const fullBt = (member.battleTag || '').toLowerCase().trim();
+      const btPrefix = member.battleTag ? member.battleTag.split('#')[0].toLowerCase().trim() : '';
+      const poe = (member.poe2Account || '').toLowerCase().trim();
+
+      // 1) 완전 일치 (카톡 프로필명 또는 배틀태그 전체)
+      if (cleanKey === profile || (fullBt && cleanKey === fullBt)) {
+        return true;
+      }
+
+      // 2) 배틀태그 전체가 포함되어 있는 경우 (예: "츄니/그냥웃는거야#3945"에 "그냥웃는거야#3945" 포함)
+      if (fullBt && cleanKey.includes(fullBt)) {
+        return true;
+      }
+
+      // 3) 배틀태그 닉네임 부분 일치 (순수 숫자가 아닌 2글자 이상인 경우만)
+      if (btPrefix && btPrefix.length >= 2 && !/^\d+$/.test(btPrefix)) {
+        if (keyParts.includes(btPrefix)) {
+          return true;
+        }
+      }
+
+      // 4) 프로필 파트 일치 (슬래시 등으로 분리된 닉네임, 순수 숫자는 절대 매칭 금지!)
+      const profileParts = profile.split(/[\/\s\(\)\[\]]+/).map(p => p.trim()).filter(p => p && !/^\d+$/.test(p));
+      for (const p of profileParts) {
+        if (p.length >= 2) {
+          if (p.includes('#')) {
+            if (cleanKey.includes(p)) return true;
+            const pSub = p.split('#')[0];
+            if (pSub.length >= 2 && !/^\d+$/.test(pSub) && keyParts.includes(pSub)) return true;
+          } else if (keyParts.includes(p)) {
+            return true;
+          }
+        }
+      }
+
+      // 5) POE2 계정명 일치 (3글자 이상)
+      if (poe && poe.length >= 3 && !/^\d+$/.test(poe)) {
+        if (cleanKey.includes(poe)) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    // 1. 길드원 명단 매칭
     members.forEach(member => {
-      // 카톡 프로필명을 분석하여 실명/닉네임 추출
-      const profile = member.kakaoProfile.toLowerCase().trim();
-      const parts = profile.split(/[\/\s]+/).map(p => p.trim()).filter(Boolean);
-      const btPrefix = member.battleTag.split('#')[0].toLowerCase().trim();
-      
       let count = 0;
       let matchedKey = null;
 
       for (const key in nameCounts) {
         const cleanKey = key.toLowerCase().trim();
-        const keyParts = cleanKey.split(/[\/\s\(\)\[\]#]+/).map(k => k.trim()).filter(Boolean);
+        // 키 파트 분할 (순수 숫자는 배틀태그 태그번호(#3981 등) 혼동 방지를 위해 반드시 제외)
+        const keyParts = cleanKey.split(/[\/\s\(\)\[\]#]+/).map(k => k.trim()).filter(k => k && !/^\d+$/.test(k));
 
-        let isMatch = false;
-
-        // 1) 완전 일치
-        if (cleanKey === profile) {
-          isMatch = true;
-        }
-        
-        // 2) 배틀태그 앞부분이 카톡 이름에 들어가거나 일치하는 경우
-        if (!isMatch && btPrefix && btPrefix.length >= 2) {
-          if (cleanKey.includes(btPrefix) || keyParts.includes(btPrefix)) {
-            isMatch = true;
-          }
-        }
-
-        // 3) 길드원 프로필에 등록된 분할 키워드가 카톡 이름에 포함되는 경우 (예: '츄니'가 '츄니/배틀태그'에 포함)
-        if (!isMatch) {
-          for (const p of parts) {
-            if (p.length >= 2) {
-              if (cleanKey.includes(p) || keyParts.includes(p)) {
-                isMatch = true;
-                break;
-              }
-            }
-          }
-        }
-
-        // 4) 카톡 이름에 들어있는 분할 단어가 길드원 프로필/이름에 포함되는 경우 (예: '츄니/배틀태그'의 '츄니'가 프로필에 포함)
-        if (!isMatch) {
-          for (const kp of keyParts) {
-            if (kp.length >= 2) {
-              if (profile.includes(kp) || parts.includes(kp)) {
-                isMatch = true;
-                break;
-              }
-            }
-          }
-        }
-
-        // 5) POE2 계정명이 카톡 이름에 포함되거나 일치하는 경우
-        if (!isMatch && member.poe2Account) {
-          const poeClean = member.poe2Account.toLowerCase().trim();
-          if (poeClean.length >= 3) {
-            if (cleanKey.includes(poeClean) || keyParts.includes(poeClean)) {
-              isMatch = true;
-            }
-          }
-        }
-
-        if (isMatch) {
+        if (isSenderMatch(cleanKey, keyParts, member)) {
           count += nameCounts[key];
           matchedKey = key;
         }
@@ -1293,67 +1290,14 @@ function handleKakaoFile(e) {
     // 2. 탈퇴자 명단도 매칭하여 단톡 횟수 업데이트
     let departedUpdated = 0;
     departedMembers.forEach(member => {
-      // 카톡 프로필명을 분석하여 실명/닉네임 추출
-      const profile = member.kakaoProfile.toLowerCase().trim();
-      const parts = profile.split(/[\/\s]+/).map(p => p.trim()).filter(Boolean);
-      const btPrefix = member.battleTag.split('#')[0].toLowerCase().trim();
-      
       let count = 0;
       let matchedKey = null;
 
       for (const key in nameCounts) {
         const cleanKey = key.toLowerCase().trim();
-        const keyParts = cleanKey.split(/[\/\s\(\)\[\]#]+/).map(k => k.trim()).filter(Boolean);
+        const keyParts = cleanKey.split(/[\/\s\(\)\[\]#]+/).map(k => k.trim()).filter(k => k && !/^\d+$/.test(k));
 
-        let isMatch = false;
-
-        // 1) 완전 일치
-        if (cleanKey === profile) {
-          isMatch = true;
-        }
-        
-        // 2) 배틀태그 앞부분이 카톡 이름에 들어가거나 일치하는 경우
-        if (!isMatch && btPrefix && btPrefix.length >= 2) {
-          if (cleanKey.includes(btPrefix) || keyParts.includes(btPrefix)) {
-            isMatch = true;
-          }
-        }
-
-        // 3) 길드원 프로필에 등록된 분할 키워드가 카톡 이름에 포함되는 경우
-        if (!isMatch) {
-          for (const p of parts) {
-            if (p.length >= 2) {
-              if (cleanKey.includes(p) || keyParts.includes(p)) {
-                isMatch = true;
-                break;
-              }
-            }
-          }
-        }
-
-        // 4) 카톡 이름에 들어있는 분할 단어가 길드원 프로필/이름에 포함되는 경우
-        if (!isMatch) {
-          for (const kp of keyParts) {
-            if (kp.length >= 2) {
-              if (profile.includes(kp) || parts.includes(kp)) {
-                isMatch = true;
-                break;
-              }
-            }
-          }
-        }
-
-        // 5) POE2 계정명이 카톡 이름에 포함되거나 일치하는 경우
-        if (!isMatch && member.poe2Account) {
-          const poeClean = member.poe2Account.toLowerCase().trim();
-          if (poeClean.length >= 3) {
-            if (cleanKey.includes(poeClean) || keyParts.includes(poeClean)) {
-              isMatch = true;
-            }
-          }
-        }
-
-        if (isMatch) {
+        if (isSenderMatch(cleanKey, keyParts, member)) {
           count += nameCounts[key];
           matchedKey = key;
         }
