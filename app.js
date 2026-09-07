@@ -9,6 +9,7 @@ let blacklist = [];
 let sortDirection = 'asc'; // 'asc' 또는 'desc' (기존 호환용)
 let currentSortField = 'no'; // 현재 정렬 기준 컬럼
 let currentSortDirection = 'asc'; // 'asc' 또는 'desc'
+let filterChatZeroOnly = false; // 대화 0회 인원만 테이블 필터링 여부
 
 // DOM 요소 캐싱
 const elements = {
@@ -83,7 +84,29 @@ const elements = {
   kakaoPeriodPreset: document.getElementById('kakao-period-preset'),
   kakaoCustomDateFields: document.getElementById('kakao-custom-date-fields'),
   kakaoStartDate: document.getElementById('kakao-start-date'),
-  kakaoEndDate: document.getElementById('kakao-end-date')
+  kakaoEndDate: document.getElementById('kakao-end-date'),
+
+  // 카톡 랭킹 TOP 10 모달
+  btnKakaoRanking: document.getElementById('btn-kakao-ranking'),
+  kakaoRankingModal: document.getElementById('kakao-ranking-modal'),
+  kakaoRankingModalCloseX: document.getElementById('kakao-ranking-modal-close-x'),
+  kakaoRankingModalCloseBtn: document.getElementById('kakao-ranking-modal-close-btn'),
+  btnCopyRanking: document.getElementById('btn-copy-ranking'),
+  rankingPeriodText: document.getElementById('ranking-period-text'),
+  rankingStatsSummary: document.getElementById('ranking-stats-summary'),
+  rankingListContainer: document.getElementById('ranking-list-container'),
+
+  // 카톡 대화 0회 미참여 인원 모달
+  btnKakaoInactive: document.getElementById('btn-kakao-inactive'),
+  kakaoInactiveModal: document.getElementById('kakao-inactive-modal'),
+  kakaoInactiveModalCloseX: document.getElementById('kakao-inactive-modal-close-x'),
+  kakaoInactiveModalCloseBtn: document.getElementById('kakao-inactive-modal-close-btn'),
+  inactivePeriodText: document.getElementById('inactive-period-text'),
+  inactiveStatsSummary: document.getElementById('inactive-stats-summary'),
+  inactiveSearchInput: document.getElementById('inactive-search-input'),
+  inactiveListContainer: document.getElementById('inactive-list-container'),
+  btnCopyInactive: document.getElementById('btn-copy-inactive'),
+  btnFilterInactiveTable: document.getElementById('btn-filter-inactive-table')
 };
 
 // 비밀번호 인증 암호화 및 잠금 제어 로직
@@ -516,7 +539,10 @@ function applyFiltersAndRender() {
       (specialFilter === 'true' && member.isSpecial) || 
       (specialFilter === 'false' && !member.isSpecial);
 
-    return matchesSearch && matchesRole && matchesClan && matchesKakao && matchesDiscord && matchesWarning && matchesSpecial;
+    // 8) 대화 0회 인원 필터링
+    const matchesZeroChat = !filterChatZeroOnly || (parseInt(member.chatCount) || 0) === 0;
+
+    return matchesSearch && matchesRole && matchesClan && matchesKakao && matchesDiscord && matchesWarning && matchesSpecial && matchesZeroChat;
   });
 
   // 테이블 본문 그리기
@@ -1324,6 +1350,7 @@ function handleKakaoFile(e) {
 
     if (totalUpdated > 0) {
       if (confirm(`[분석 기간: ${periodText}]\n\n총 ${totalParsedLines}개의 대화 중 길드원 ${membersUpdated}명, 탈퇴자 ${departedUpdated}명을 매칭했습니다. 단톡 횟수를 갱신하시겠습니까?`)) {
+        localStorage.setItem('kakao_analysis_period', periodText);
         saveToLocalStorage();
         saveDepartedToLocalStorage();
         updateAppView();
@@ -1337,6 +1364,344 @@ function handleKakaoFile(e) {
   reader.readAsText(file);
   e.target.value = '';
 }
+
+// ----------------------------------------------------
+// 카카오톡 단톡 랭킹 TOP 10 기능
+// ----------------------------------------------------
+function openKakaoRankingModal() {
+  renderKakaoRanking();
+  if (elements.kakaoRankingModal) {
+    elements.kakaoRankingModal.classList.add('active');
+    elements.kakaoRankingModal.setAttribute('aria-hidden', 'false');
+  }
+}
+
+function closeKakaoRankingModal() {
+  if (elements.kakaoRankingModal) {
+    elements.kakaoRankingModal.classList.remove('active');
+    elements.kakaoRankingModal.setAttribute('aria-hidden', 'true');
+  }
+}
+
+function renderKakaoRanking() {
+  if (!elements.rankingListContainer) return;
+
+  const savedPeriod = localStorage.getItem('kakao_analysis_period') || '전체 기간';
+  if (elements.rankingPeriodText) {
+    elements.rankingPeriodText.textContent = savedPeriod;
+  }
+
+  // chatCount가 0보다 큰 인원 필터링 및 대화 횟수 내림차순 정렬
+  const activeMembers = members
+    .filter(m => (parseInt(m.chatCount) || 0) > 0)
+    .sort((a, b) => {
+      const diff = (parseInt(b.chatCount) || 0) - (parseInt(a.chatCount) || 0);
+      if (diff !== 0) return diff;
+      return (a.battleTag || '').localeCompare(b.battleTag || '', 'ko');
+    });
+
+  if (activeMembers.length === 0) {
+    if (elements.rankingStatsSummary) {
+      elements.rankingStatsSummary.textContent = '분석된 대화 데이터가 없습니다.';
+    }
+    elements.rankingListContainer.innerHTML = `
+      <div class="ranking-empty-state">
+        <div style="font-size: 2.5rem; margin-bottom: 12px;">💬</div>
+        <p style="font-size: 1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px;">아직 분석된 카톡 대화 기록이 없습니다.</p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">상단의 <b>[💬 카톡 대화 분석 갱신]</b> 버튼을 눌러 카카오톡 대화 내역(.txt)을 먼저 분석해 주세요.</p>
+      </div>
+    `;
+    return;
+  }
+
+  const top10 = activeMembers.slice(0, 10);
+  const totalChatSum = activeMembers.reduce((sum, m) => sum + (parseInt(m.chatCount) || 0), 0);
+  const top10Sum = top10.reduce((sum, m) => sum + (parseInt(m.chatCount) || 0), 0);
+  const top10Percent = totalChatSum > 0 ? Math.round((top10Sum / totalChatSum) * 100) : 0;
+
+  if (elements.rankingStatsSummary) {
+    elements.rankingStatsSummary.innerHTML = `
+      대화 참여 길드원: <b>${activeMembers.length}</b>명 / TOP 10 대화량: <b>${top10Sum.toLocaleString()}</b>회 (전체의 <b>${top10Percent}%</b>)
+    `;
+  }
+
+  const maxCount = parseInt(top10[0].chatCount) || 1;
+  const medals = ['🥇', '🥈', '🥉'];
+
+  let html = '';
+  top10.forEach((member, index) => {
+    const rank = index + 1;
+    const count = parseInt(member.chatCount) || 0;
+    const percent = Math.max(6, Math.round((count / maxCount) * 100));
+
+    let badgeHtml = '';
+    if (rank <= 3) {
+      badgeHtml = `<div class="ranking-badge">${medals[rank - 1]}</div>`;
+    } else {
+      badgeHtml = `<div class="ranking-badge normal">${rank}</div>`;
+    }
+
+    let roleBadge = '';
+    if (member.role === 'staff') {
+      roleBadge = '<span class="badge-role staff" style="font-size: 0.68rem; padding: 2px 6px;">운영진</span>';
+    } else if (member.role === 'member') {
+      roleBadge = '<span class="badge-role member" style="font-size: 0.68rem; padding: 2px 6px;">일반</span>';
+    } else {
+      roleBadge = '<span class="badge-role new" style="font-size: 0.68rem; padding: 2px 6px;">신입</span>';
+    }
+
+    html += `
+      <div class="ranking-card rank-${rank}">
+        ${badgeHtml}
+        <div class="ranking-info">
+          <div class="ranking-name-row">
+            <span class="ranking-name">${escapeHTML(member.battleTag)}</span>
+            ${roleBadge}
+            ${member.kakaoProfile ? `<span class="ranking-profile">(${escapeHTML(member.kakaoProfile)})</span>` : ''}
+          </div>
+          <div class="ranking-bar-bg" title="1위 대비 ${Math.round((count / maxCount) * 100)}%">
+            <div class="ranking-bar-fill" style="width: ${percent}%;"></div>
+          </div>
+        </div>
+        <div class="ranking-count-box">
+          <span class="ranking-count-num">${count.toLocaleString()}</span>
+          <span class="ranking-count-unit">회</span>
+        </div>
+      </div>
+    `;
+  });
+
+  elements.rankingListContainer.innerHTML = html;
+}
+
+function copyRankingText() {
+  const savedPeriod = localStorage.getItem('kakao_analysis_period') || '전체 기간';
+  const activeMembers = members
+    .filter(m => (parseInt(m.chatCount) || 0) > 0)
+    .sort((a, b) => (parseInt(b.chatCount) || 0) - (parseInt(a.chatCount) || 0));
+
+  if (activeMembers.length === 0) {
+    showToast('복사할 순위 데이터가 없습니다.', 'warning');
+    return;
+  }
+
+  const top10 = activeMembers.slice(0, 10);
+  const medals = ['🥇', '🥈', '🥉'];
+  let text = `🏆 [무명클랜] 단톡 대화 순위 TOP 10 🏆\n`;
+  text += `📅 분석 기간: ${savedPeriod}\n`;
+  text += `────────────────────\n`;
+
+  top10.forEach((m, idx) => {
+    const rank = idx + 1;
+    const medalOrNum = rank <= 3 ? medals[rank - 1] : `${rank}위`;
+    const name = m.battleTag || m.kakaoProfile || '익명';
+    const count = (parseInt(m.chatCount) || 0).toLocaleString();
+    text += `${medalOrNum} ${name}: ${count}회\n`;
+  });
+
+  text += `────────────────────\n`;
+  text += `※ 무명 클랜 길드 관리 시스템(GMS) 집계`;
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('순위 텍스트가 클립보드에 복사되었습니다! (단톡방/디스코드 공유용)', 'success');
+    }).catch(() => {
+      fallbackCopyText(text);
+    });
+  } else {
+    fallbackCopyText(text);
+  }
+}
+
+function fallbackCopyText(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try {
+    document.execCommand('copy');
+    showToast('순위 텍스트가 클립보드에 복사되었습니다!', 'success');
+  } catch (err) {
+    showToast('클립보드 복사에 실패했습니다.', 'danger');
+  }
+  document.body.removeChild(ta);
+}
+
+window.openKakaoRankingModal = openKakaoRankingModal;
+window.closeKakaoRankingModal = closeKakaoRankingModal;
+
+// ----------------------------------------------------
+// 카카오톡 대화 0회 미참여 인원 조회 기능
+// ----------------------------------------------------
+function openKakaoInactiveModal() {
+  if (elements.inactiveSearchInput) {
+    elements.inactiveSearchInput.value = '';
+  }
+  renderKakaoInactive();
+  if (elements.kakaoInactiveModal) {
+    elements.kakaoInactiveModal.classList.add('active');
+    elements.kakaoInactiveModal.setAttribute('aria-hidden', 'false');
+  }
+}
+
+function closeKakaoInactiveModal() {
+  if (elements.kakaoInactiveModal) {
+    elements.kakaoInactiveModal.classList.remove('active');
+    elements.kakaoInactiveModal.setAttribute('aria-hidden', 'true');
+  }
+}
+
+function renderKakaoInactive(searchQuery = '') {
+  if (!elements.inactiveListContainer) return;
+
+  const savedPeriod = localStorage.getItem('kakao_analysis_period') || '전체 기간';
+  if (elements.inactivePeriodText) {
+    elements.inactivePeriodText.textContent = savedPeriod;
+  }
+
+  // 대화 횟수가 0 또는 비어있는 길드원 필터링
+  const allInactive = members.filter(m => (parseInt(m.chatCount) || 0) === 0);
+  const totalCount = members.length;
+  const inactiveCount = allInactive.length;
+  const percent = totalCount > 0 ? Math.round((inactiveCount / totalCount) * 100) : 0;
+
+  // 카톡방 참여 중인데 0회인 인원 vs 카톡방 자체 미참여 인원
+  const inKakaoZero = allInactive.filter(m => m.inKakao).length;
+  const notInKakao = allInactive.filter(m => !m.inKakao).length;
+
+  if (elements.inactiveStatsSummary) {
+    elements.inactiveStatsSummary.innerHTML = `
+      전체 길드원 <b>${totalCount}</b>명 중 대화 0회: <b style="color: var(--danger); font-size: 0.9rem;">${inactiveCount}</b>명 (<b>${percent}%</b>)<br>
+      <span style="font-size: 0.75rem; color: var(--text-muted);">
+        · 카톡방 참여 중(대화 0회): <b style="color: #facc15;">${inKakaoZero}명</b> / 카톡 미참여: <b style="color: #ef4444;">${notInKakao}명</b>
+      </span>
+    `;
+  }
+
+  // 내부 검색 필터링 (배틀태그, 카톡명, POE2)
+  const q = searchQuery.toLowerCase().trim();
+  const displayList = allInactive.filter(m => {
+    if (!q) return true;
+    return (m.battleTag && m.battleTag.toLowerCase().includes(q)) ||
+           (m.kakaoProfile && m.kakaoProfile.toLowerCase().includes(q)) ||
+           (m.poe2Account && m.poe2Account.toLowerCase().includes(q));
+  });
+
+  if (displayList.length === 0) {
+    if (inactiveCount === 0) {
+      elements.inactiveListContainer.innerHTML = `
+        <div class="ranking-empty-state">
+          <div style="font-size: 2.5rem; margin-bottom: 12px;">🎉</div>
+          <p style="font-size: 1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px;">대화 0회 인원이 없습니다!</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">모든 길드원이 활발하게 단톡에 참여하고 있습니다.</p>
+        </div>
+      `;
+    } else {
+      elements.inactiveListContainer.innerHTML = `
+        <div class="ranking-empty-state">
+          <p style="font-size: 0.95rem; color: var(--text-muted);">검색 조건에 맞는 0회 인원이 없습니다.</p>
+        </div>
+      `;
+    }
+    return;
+  }
+
+  let html = '';
+  displayList.forEach(member => {
+    const noDisplay = member.no !== null && member.no !== undefined ? member.no : '-';
+
+    let roleBadge = '';
+    if (member.role === 'staff') {
+      roleBadge = '<span class="badge-role staff" style="font-size: 0.68rem; padding: 2px 6px;">운영진</span>';
+    } else if (member.role === 'member') {
+      roleBadge = '<span class="badge-role member" style="font-size: 0.68rem; padding: 2px 6px;">일반</span>';
+    } else {
+      roleBadge = '<span class="badge-role new" style="font-size: 0.68rem; padding: 2px 6px;">신입</span>';
+    }
+
+    const kakaoBadge = member.inKakao 
+      ? `<span class="badge-tag kakao-in">💬 카톡 참여</span>`
+      : `<span class="badge-tag kakao-out">❌ 카톡 미참여</span>`;
+
+    const warningBadge = member.warning 
+      ? `<span class="badge-tag warning-on">⚠️ 경고 대상</span>`
+      : '';
+
+    html += `
+      <div class="inactive-card">
+        <div class="inactive-card-left">
+          <span class="inactive-num">${noDisplay}</span>
+          <div class="inactive-info">
+            <div class="inactive-name-row">
+              <span class="inactive-name">${escapeHTML(member.battleTag)}</span>
+              ${roleBadge}
+              ${kakaoBadge}
+              ${warningBadge}
+            </div>
+            <div class="inactive-meta-row">
+              <span>카톡: <b>${escapeHTML(member.kakaoProfile || '미등록')}</b></span>
+              ${member.joinDate ? `<span>가입일: ${escapeHTML(member.joinDate)}</span>` : ''}
+              ${member.poe2Account ? `<span>POE2: ${escapeHTML(member.poe2Account)}</span>` : ''}
+            </div>
+          </div>
+        </div>
+        <div style="flex-shrink: 0; text-align: right;">
+          <button class="btn-icon edit-btn" onclick="closeKakaoInactiveModal(); openEditModal('${member.id}')" title="수정" style="display: inline-flex;">✏️</button>
+        </div>
+      </div>
+    `;
+  });
+
+  elements.inactiveListContainer.innerHTML = html;
+}
+
+function copyInactiveText() {
+  const savedPeriod = localStorage.getItem('kakao_analysis_period') || '전체 기간';
+  const allInactive = members.filter(m => (parseInt(m.chatCount) || 0) === 0);
+
+  if (allInactive.length === 0) {
+    showToast('복사할 대화 0회 인원이 없습니다.', 'warning');
+    return;
+  }
+
+  let text = `🔇 [무명클랜] 대화 미참여 길드원 명단 (0회) 🔇\n`;
+  text += `📅 분석 기간: ${savedPeriod}\n`;
+  text += `총 ${allInactive.length}명\n`;
+  text += `────────────────────\n`;
+
+  allInactive.forEach((m, idx) => {
+    const kakaoStatus = m.inKakao ? '카톡방 참여 중' : '카톡 미참여';
+    const profile = m.kakaoProfile ? `(${m.kakaoProfile})` : '';
+    text += `${idx + 1}. ${m.battleTag} ${profile} [${kakaoStatus}]\n`;
+  });
+
+  text += `────────────────────\n`;
+  text += `※ 무명 클랜 길드 관리 시스템(GMS) 집계`;
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('0회 인원 명단이 클립보드에 복사되었습니다!', 'success');
+    }).catch(() => {
+      fallbackCopyText(text);
+    });
+  } else {
+    fallbackCopyText(text);
+  }
+}
+
+function filterTableByInactive() {
+  closeKakaoInactiveModal();
+  filterChatZeroOnly = true;
+  applyFiltersAndRender();
+  showToast(`메인 테이블에 대화 0회 인원만 필터링되었습니다. (복귀: 검색 지우기)`, 'info');
+}
+
+window.openKakaoInactiveModal = openKakaoInactiveModal;
+window.closeKakaoInactiveModal = closeKakaoInactiveModal;
+window.filterTableByInactive = filterTableByInactive;
+window.copyInactiveText = copyInactiveText;
 
 // 9. 유틸리티 함수들
 function getFormattedDate() {
@@ -1381,6 +1746,7 @@ function registerEventListeners() {
   elements.searchInput.addEventListener('input', debounce(applyFiltersAndRender, 150));
   elements.btnClearSearch.addEventListener('click', () => {
     elements.searchInput.value = '';
+    filterChatZeroOnly = false;
     applyFiltersAndRender();
     elements.searchInput.focus();
   });
@@ -1518,6 +1884,50 @@ function registerEventListeners() {
       closeKakaoModal();
       elements.inputKakaoFile.click();
     });
+  }
+
+  // 단톡 랭킹 TOP 10 모달 이벤트 바인딩
+  if (elements.btnKakaoRanking) {
+    elements.btnKakaoRanking.addEventListener('click', openKakaoRankingModal);
+  }
+  if (elements.kakaoRankingModalCloseX) {
+    elements.kakaoRankingModalCloseX.addEventListener('click', closeKakaoRankingModal);
+  }
+  if (elements.kakaoRankingModalCloseBtn) {
+    elements.kakaoRankingModalCloseBtn.addEventListener('click', closeKakaoRankingModal);
+  }
+  if (elements.kakaoRankingModal) {
+    elements.kakaoRankingModal.addEventListener('click', (e) => {
+      if (e.target === elements.kakaoRankingModal) closeKakaoRankingModal();
+    });
+  }
+  if (elements.btnCopyRanking) {
+    elements.btnCopyRanking.addEventListener('click', copyRankingText);
+  }
+
+  // 대화 0회 미참여 인원 모달 이벤트 바인딩
+  if (elements.btnKakaoInactive) {
+    elements.btnKakaoInactive.addEventListener('click', openKakaoInactiveModal);
+  }
+  if (elements.kakaoInactiveModalCloseX) {
+    elements.kakaoInactiveModalCloseX.addEventListener('click', closeKakaoInactiveModal);
+  }
+  if (elements.kakaoInactiveModalCloseBtn) {
+    elements.kakaoInactiveModalCloseBtn.addEventListener('click', closeKakaoInactiveModal);
+  }
+  if (elements.kakaoInactiveModal) {
+    elements.kakaoInactiveModal.addEventListener('click', (e) => {
+      if (e.target === elements.kakaoInactiveModal) closeKakaoInactiveModal();
+    });
+  }
+  if (elements.inactiveSearchInput) {
+    elements.inactiveSearchInput.addEventListener('input', (e) => renderKakaoInactive(e.target.value));
+  }
+  if (elements.btnCopyInactive) {
+    elements.btnCopyInactive.addEventListener('click', copyInactiveText);
+  }
+  if (elements.btnFilterInactiveTable) {
+    elements.btnFilterInactiveTable.addEventListener('click', filterTableByInactive);
   }
 
   // 대시보드 통계 카드 클릭 시 필터 자동 연동
@@ -2138,6 +2548,7 @@ window.resetSortToDefault = function() {
   currentSortField = 'no';
   currentSortDirection = 'asc';
   sortDirection = currentSortDirection;
+  filterChatZeroOnly = false;
   updateSortHeaderUI();
   applyFiltersAndRender();
   showToast('기본 번호 순서(오름차순)로 정렬이 초기화되었습니다.', 'info');

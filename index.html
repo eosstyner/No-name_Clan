@@ -234,6 +234,8 @@
           
           <button id="btn-kakao-trigger" class="btn btn-secondary" title="카카오톡 대화 로그 파일(.txt)을 분석하여 인원별 단톡 대화 횟수를 일괄 갱신합니다.">💬 카톡 대화 분석 갱신</button>
           <input type="file" id="input-kakao-file" accept=".txt" style="display: none;">
+          <button id="btn-kakao-ranking" class="btn btn-secondary" onclick="openKakaoRankingModal()" title="단톡 대화 순위 TOP 10 명예의 전당을 확인합니다.">🏆 단톡 랭킹 TOP 10</button>
+          <button id="btn-kakao-inactive" class="btn btn-secondary" onclick="openKakaoInactiveModal()" title="단톡 대화 기록이 없는(0회) 인원 명단을 조회합니다.">🔇 대화 기록 없는 사람 (0회)</button>
         </div>
       </section>
 
@@ -583,6 +585,99 @@
     </div>
   </div>
 
+  <!-- 카카오톡 단톡 랭킹 TOP 10 모달창 -->
+  <div id="kakao-ranking-modal" class="modal-overlay" aria-hidden="true" role="dialog">
+    <div class="modal-card ranking-modal-card" style="max-width: 580px; width: 92%;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 1.4rem;">🏆</span>
+          <h2 style="margin: 0; font-size: 1.2rem; font-weight: 700;">단톡 대화 순위 TOP 10 (명예의 전당)</h2>
+        </div>
+        <button id="kakao-ranking-modal-close-x" class="modal-close-btn" onclick="closeKakaoRankingModal()">&times;</button>
+      </div>
+      <div class="modal-body" style="padding: 22px; max-height: 75vh; overflow-y: auto;">
+        <!-- 랭킹 상단 기간 표시 배너 -->
+        <div class="ranking-period-banner">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <div class="ranking-period-info">
+              <span class="ranking-period-badge">📅 분석 기간</span>
+              <span id="ranking-period-text" class="ranking-period-dates">전체 기간</span>
+            </div>
+            <button type="button" class="btn btn-secondary" onclick="closeKakaoRankingModal(); triggerKakaoImport();" style="font-size: 0.75rem; padding: 4px 10px; height: auto;" title="새로운 기간으로 카톡 대화를 다시 분석합니다.">
+              🔄 기간 변경 분석
+            </button>
+          </div>
+          <div id="ranking-stats-summary" class="ranking-stats-summary">
+            집계 중...
+          </div>
+        </div>
+
+        <!-- 1~10위 랭킹 목록 -->
+        <div id="ranking-list-container" class="ranking-list">
+          <!-- JS로 동적 생성 -->
+        </div>
+      </div>
+      <div class="modal-footer" style="padding: 14px 22px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+        <button type="button" id="btn-copy-ranking" class="btn btn-secondary" onclick="copyRankingText()" style="display: flex; align-items: center; gap: 6px;" title="공지용 텍스트를 클립보드에 복사합니다.">
+          <span>📋</span> <span>순위 텍스트 복사</span>
+        </button>
+        <button type="button" id="kakao-ranking-modal-close-btn" class="btn btn-primary" onclick="closeKakaoRankingModal()">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 카카오톡 대화 0회 미참여 인원 모달창 -->
+  <div id="kakao-inactive-modal" class="modal-overlay" aria-hidden="true" role="dialog">
+    <div class="modal-card ranking-modal-card" style="max-width: 650px; width: 92%;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 1.4rem;">🔇</span>
+          <h2 style="margin: 0; font-size: 1.2rem; font-weight: 700;">대화 기록 없는 인원 (0회)</h2>
+        </div>
+        <button id="kakao-inactive-modal-close-x" class="modal-close-btn" onclick="closeKakaoInactiveModal()">&times;</button>
+      </div>
+      <div class="modal-body" style="padding: 22px; max-height: 75vh; overflow-y: auto;">
+        <!-- 상단 요약 배너 -->
+        <div class="ranking-period-banner">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <div class="ranking-period-info">
+              <span class="ranking-period-badge" style="background: rgba(239, 68, 68, 0.15); color: var(--danger); border-color: rgba(239, 68, 68, 0.4);">🔇 대화 미참여 (0회)</span>
+              <span id="inactive-period-text" class="ranking-period-dates">전체 기간</span>
+            </div>
+            <button type="button" class="btn btn-secondary" onclick="closeKakaoInactiveModal(); triggerKakaoImport();" style="font-size: 0.75rem; padding: 4px 10px; height: auto;" title="새로운 기간으로 카톡 대화를 다시 분석합니다.">
+              🔄 기간 변경 분석
+            </button>
+          </div>
+          <div id="inactive-stats-summary" class="ranking-stats-summary">
+            집계 중...
+          </div>
+        </div>
+
+        <!-- 검색 필터 박스 -->
+        <div style="margin-bottom: 12px; display: flex; gap: 8px;">
+          <input type="text" id="inactive-search-input" placeholder="0회 인원 중 배틀태그/프로필 검색..." 
+            style="flex: 1; padding: 9px 14px; font-size: 0.85rem; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-primary);">
+        </div>
+
+        <!-- 0회 인원 목록 컨테이너 -->
+        <div id="inactive-list-container" class="ranking-list" style="max-height: 380px; overflow-y: auto;">
+          <!-- JS로 동적 생성 -->
+        </div>
+      </div>
+      <div class="modal-footer" style="padding: 14px 22px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+        <div style="display: flex; gap: 8px;">
+          <button type="button" id="btn-copy-inactive" class="btn btn-secondary" onclick="copyInactiveText()" style="display: flex; align-items: center; gap: 6px;" title="0회 인원 명단을 클립보드에 복사합니다.">
+            <span>📋</span> <span>명단 텍스트 복사</span>
+          </button>
+          <button type="button" id="btn-filter-inactive-table" class="btn btn-secondary" onclick="filterTableByInactive()" style="display: flex; align-items: center; gap: 6px;" title="메인 테이블에서 0회 인원만 모아봅니다.">
+            <span>🔍</span> <span>테이블에서 모아보기</span>
+          </button>
+        </div>
+        <button type="button" id="kakao-inactive-modal-close-btn" class="btn btn-primary" onclick="closeKakaoInactiveModal()">닫기</button>
+      </div>
+    </div>
+  </div>
+
   <!-- 비밀번호 잠금 모달창 -->
   <div id="auth-overlay" class="modal-overlay active" style="z-index: 9999; backdrop-filter: blur(25px); background: rgba(12, 11, 16, 0.98);">
     <div class="modal-card" style="max-width: 400px; text-align: center; border: 1px solid var(--border-color); box-shadow: var(--shadow-2xl); padding: 30px;">
@@ -614,6 +709,6 @@
   <!-- 데이터 연동용 파일 로드 -->
   <script src="initialData.js"></script>
   <script src="departedData.js"></script>
-  <script src="app.js?v=2.4" defer></script>
+  <script src="app.js?v=2.6" defer></script>
 </body>
 </html>
