@@ -6,7 +6,9 @@
 let members = [];
 let departedMembers = [];
 let blacklist = [];
-let sortDirection = 'asc'; // 'asc' 또는 'desc' (정순/역순)
+let sortDirection = 'asc'; // 'asc' 또는 'desc' (기존 호환용)
+let currentSortField = 'no'; // 현재 정렬 기준 컬럼
+let currentSortDirection = 'asc'; // 'asc' 또는 'desc'
 
 // DOM 요소 캐싱
 const elements = {
@@ -454,8 +456,9 @@ function updateAppView() {
   // 전체 데이터 건수 표시
   elements.totalCount.textContent = members.length;
 
-  // 필터 적용 후 테이블 렌더링
+  // 필터 적용 후 테이블 렌더링 및 헤더 정렬 상태 갱신
   applyFiltersAndRender();
+  updateSortHeaderUI();
 
   // 조직도 렌더링
   renderOrgChart();
@@ -520,6 +523,117 @@ function applyFiltersAndRender() {
   renderTable(filtered);
 }
 
+// 다기능 컬럼 정렬 비교 함수
+function compareMembers(a, b, field, direction) {
+  let comparison = 0;
+
+  switch (field) {
+    case 'no': {
+      // 기본 번호순: 운영진(1) -> 일반(2) -> 신입(3) 순, 내부적으로 번호순
+      const roleOrder = { 'staff': 1, 'member': 2, 'new': 3 };
+      if (roleOrder[a.role] !== roleOrder[b.role]) {
+        comparison = (roleOrder[a.role] || 99) - (roleOrder[b.role] || 99);
+      } else {
+        const aNo = a.no !== null && a.no !== undefined ? a.no : 99999;
+        const bNo = b.no !== null && b.no !== undefined ? b.no : 99999;
+        comparison = aNo - bNo;
+      }
+      break;
+    }
+
+    case 'role': {
+      // 직책 순서
+      const roleOrder = { 'staff': 1, 'member': 2, 'new': 3 };
+      comparison = (roleOrder[a.role] || 99) - (roleOrder[b.role] || 99);
+      break;
+    }
+
+    case 'battleTag': {
+      // 배틀태그 가나다순/알파벳순
+      const strA = (a.battleTag || '').toLowerCase();
+      const strB = (b.battleTag || '').toLowerCase();
+      comparison = strA.localeCompare(strB, 'ko', { numeric: true, sensitivity: 'base' });
+      break;
+    }
+
+    case 'kakaoProfile': {
+      // 카카오톡 프로필 가나다순
+      const strA = (a.kakaoProfile || '').toLowerCase();
+      const strB = (b.kakaoProfile || '').toLowerCase();
+      comparison = strA.localeCompare(strB, 'ko', { numeric: true, sensitivity: 'base' });
+      break;
+    }
+
+    case 'poe2Account': {
+      // POE2 계정명 가나다순
+      const strA = (a.poe2Account || '').toLowerCase();
+      const strB = (b.poe2Account || '').toLowerCase();
+      comparison = strA.localeCompare(strB, 'ko', { numeric: true, sensitivity: 'base' });
+      break;
+    }
+
+    case 'joinDate': {
+      // 가입일 날짜순 ("26. 07. 03" 등 파싱)
+      const parseDate = (dStr) => {
+        if (!dStr) return 0;
+        if (dStr instanceof Date) return dStr.getTime();
+        const parts = String(dStr).match(/\d+/g);
+        if (!parts || parts.length === 0) return 0;
+        let y = parseInt(parts[0]);
+        if (y < 100) y += 2000;
+        const m = parts.length > 1 ? parseInt(parts[1]) : 1;
+        const d = parts.length > 2 ? parseInt(parts[2]) : 1;
+        return new Date(y, m - 1, d).getTime();
+      };
+      comparison = parseDate(a.joinDate) - parseDate(b.joinDate);
+      break;
+    }
+
+    case 'chatCount': {
+      // 단톡 횟수 숫자 비교
+      const aCount = parseInt(a.chatCount) || 0;
+      const bCount = parseInt(b.chatCount) || 0;
+      comparison = aCount - bCount;
+      break;
+    }
+
+    case 'inClan':
+    case 'inKakao':
+    case 'inDiscord':
+    case 'isSpecial':
+    case 'warning': {
+      // 불리언 상태 체크 여부
+      const aVal = a[field] ? 1 : 0;
+      const bVal = b[field] ? 1 : 0;
+      comparison = aVal - bVal;
+      break;
+    }
+
+    case 'notes': {
+      // 비고 가나다순
+      const strA = (a.notes || '').toLowerCase();
+      const strB = (b.notes || '').toLowerCase();
+      comparison = strA.localeCompare(strB, 'ko', { numeric: true });
+      break;
+    }
+
+    default: {
+      const aNo = a.no !== null && a.no !== undefined ? a.no : 99999;
+      const bNo = b.no !== null && b.no !== undefined ? b.no : 99999;
+      comparison = aNo - bNo;
+    }
+  }
+
+  // 보조 정렬 (값이 동일할 경우 번호 순서를 유지하여 안정적 정렬 보장)
+  if (comparison === 0 && field !== 'no') {
+    const aNo = a.no !== null && a.no !== undefined ? a.no : 99999;
+    const bNo = b.no !== null && b.no !== undefined ? b.no : 99999;
+    return aNo - bNo;
+  }
+
+  return direction === 'asc' ? comparison : -comparison;
+}
+
 // 4. 테이블 렌더링
 function renderTable(filteredList) {
   elements.filteredCount.textContent = filteredList.length;
@@ -532,20 +646,8 @@ function renderTable(filteredList) {
 
   elements.noDataView.style.display = 'none';
 
-  // 정렬 순서: 기본(오름차순)은 운영진 -> 일반 -> 신입 순서 (번호 오름차순)
-  // 역순(내림차순)은 신입 -> 일반 -> 운영진 순서 (번호 내림차순)
-  const sortedList = [...filteredList].sort((a, b) => {
-    const roleOrder = { 'staff': 1, 'member': 2, 'new': 3 };
-    let comparison = 0;
-    if (roleOrder[a.role] !== roleOrder[b.role]) {
-      comparison = roleOrder[a.role] - roleOrder[b.role];
-    } else {
-      const aNo = a.no || 99999;
-      const bNo = b.no || 99999;
-      comparison = aNo - bNo;
-    }
-    return sortDirection === 'asc' ? comparison : -comparison;
-  });
+  // 현재 선택된 컬럼 및 정렬 방향에 따라 데이터 정렬
+  const sortedList = [...filteredList].sort((a, b) => compareMembers(a, b, currentSortField, currentSortDirection));
 
   let html = '';
   sortedList.forEach(member => {
@@ -1555,6 +1657,16 @@ function registerEventListeners() {
       showToast('경고 대상자만 필터링되었습니다.', 'warning');
     });
   }
+
+  // 테이블 헤더 컬럼 클릭 시 오름차순/내림차순 정렬 이벤트 바인딩
+  document.querySelectorAll('#members-table th.sortable-th').forEach(th => {
+    th.addEventListener('click', () => {
+      const field = th.dataset.field;
+      if (field) {
+        sortByField(field);
+      }
+    });
+  });
 }
 
 // 탭 전환 기능
@@ -2001,16 +2113,70 @@ window.saveInlineBlacklist = function() {
   }
 };
 
-// 정렬 방향 토글 (정순 <-> 역순)
-window.toggleSortDirection = function() {
-  sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+// 헤더 정렬 표시 아이콘 및 상단 버튼 UI 동기화
+function updateSortHeaderUI() {
+  const fields = ['no', 'role', 'battleTag', 'kakaoProfile', 'poe2Account', 'joinDate', 'chatCount', 'inClan', 'inKakao', 'inDiscord', 'isSpecial', 'warning', 'notes'];
   
-  // 버튼 텍스트 변경
+  fields.forEach(field => {
+    const th = document.querySelector(`.sortable-th[data-field="${field}"]`);
+    const icon = document.getElementById(`sort-icon-${field}`);
+    if (!th || !icon) return;
+    
+    if (field === currentSortField) {
+      th.classList.add('active-sort');
+      icon.textContent = currentSortDirection === 'asc' ? '▲' : '▼';
+      icon.classList.add('active');
+    } else {
+      th.classList.remove('active-sort');
+      icon.textContent = '⇅';
+      icon.classList.remove('active');
+    }
+  });
+
+  // 상단 번호 정렬 토글 버튼 텍스트도 상태에 맞춰 친절하게 변경
   const btn = document.getElementById('btn-toggle-sort');
   if (btn) {
-    btn.innerHTML = sortDirection === 'asc' ? '⇅ 번호 역순으로 보기' : '⇅ 번호 정순으로 보기';
+    if (currentSortField === 'no') {
+      btn.innerHTML = currentSortDirection === 'asc' ? '⇅ 번호 역순으로 보기' : '⇅ 번호 정순으로 보기';
+      btn.title = "정렬 방향을 정순/역순으로 전환합니다.";
+    } else {
+      const fieldNames = {
+        'role': '구분', 'battleTag': '배틀태그', 'kakaoProfile': '카톡 프로필',
+        'poe2Account': 'POE2 계정', 'joinDate': '가입일', 'chatCount': '단톡횟수',
+        'inClan': '클랜', 'inKakao': '카톡', 'inDiscord': '디코',
+        'isSpecial': '특별', 'warning': '경고', 'notes': '비고'
+      };
+      const dirName = currentSortDirection === 'asc' ? '오름차순' : '내림차순';
+      btn.innerHTML = `↺ 기본 정렬로 복귀 (${fieldNames[currentSortField] || currentSortField} ${dirName} 중)`;
+      btn.title = "클릭 시 기본 번호 정순으로 초기화합니다.";
+    }
   }
-  
+}
+
+// 특정 컬럼 클릭 시 정렬 (오름차순 <-> 내림차순 토글)
+window.sortByField = function(field) {
+  if (currentSortField === field) {
+    currentSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
+  } else {
+    currentSortField = field;
+    // 단톡 횟수나 경고는 많은/대상자가 먼저 나오는 것이 직관적이므로 내림차순(desc)으로 시작, 나머지는 오름차순(asc)
+    currentSortDirection = (field === 'chatCount' || field === 'warning') ? 'desc' : 'asc';
+  }
+  sortDirection = currentSortDirection;
+  updateSortHeaderUI();
+  applyFiltersAndRender();
+};
+
+// 상단 버튼용: 번호 기준 정순 <-> 역순 토글 (다른 컬럼 정렬 중일 경우 번호 기본순으로 복귀)
+window.toggleSortDirection = function() {
+  if (currentSortField !== 'no') {
+    currentSortField = 'no';
+    currentSortDirection = 'asc';
+  } else {
+    currentSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
+  }
+  sortDirection = currentSortDirection;
+  updateSortHeaderUI();
   applyFiltersAndRender();
 };
 

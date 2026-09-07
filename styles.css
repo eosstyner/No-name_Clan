@@ -808,6 +808,50 @@ body {
   white-space: nowrap;
 }
 
+/* 정렬 가능한 테이블 헤더 스타일 */
+.sortable-th {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.sortable-th:hover {
+  background: var(--bg-hover-row) !important;
+  color: var(--primary) !important;
+}
+
+.sortable-th .th-content {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.sortable-th .sort-arrow {
+  font-size: 0.72rem;
+  opacity: 0.35;
+  transition: all var(--transition-fast);
+  color: var(--text-muted);
+}
+
+.sortable-th:hover .sort-arrow {
+  opacity: 0.85;
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.sortable-th.active-sort {
+  color: var(--primary) !important;
+  background: var(--bg-badge) !important;
+}
+
+.sortable-th.active-sort .sort-arrow {
+  opacity: 1;
+  color: var(--primary);
+  font-weight: 800;
+}
+
 .premium-table td {
   padding: 8px 16px;
   border-bottom: 1px solid var(--border-color);

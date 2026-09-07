@@ -253,19 +253,84 @@
           <table id="members-table" class="premium-table">
             <thead>
               <tr>
-                <th style="width: 50px;">번호</th>
-                <th style="width: 100px;">구분</th>
-                <th>배틀태그</th>
-                <th>카톡 프로필</th>
-                <th>POE2 계정</th>
-                <th style="width: 110px;">가입일</th>
-                <th style="width: 90px; text-align: right;">단톡횟수</th>
-                <th style="width: 80px; text-align: center;">클랜</th>
-                <th style="width: 80px; text-align: center;">카톡</th>
-                <th style="width: 80px; text-align: center;">디코</th>
-                <th style="width: 80px; text-align: center;">특별</th>
-                <th style="width: 80px; text-align: center;">경고</th>
-                <th>비고</th>
+                <th class="sortable-th active-sort" data-field="no" style="width: 60px;" title="클릭하여 번호 오름차순/내림차순 정렬">
+                  <div class="th-content">
+                    <span>번호</span>
+                    <span class="sort-arrow" id="sort-icon-no">▲</span>
+                  </div>
+                </th>
+                <th class="sortable-th" data-field="role" style="width: 95px;" title="클릭하여 직책(운영진/일반/신입) 정렬">
+                  <div class="th-content">
+                    <span>구분</span>
+                    <span class="sort-arrow" id="sort-icon-role">⇅</span>
+                  </div>
+                </th>
+                <th class="sortable-th" data-field="battleTag" title="클릭하여 배틀태그 가나다순 정렬">
+                  <div class="th-content">
+                    <span>배틀태그</span>
+                    <span class="sort-arrow" id="sort-icon-battleTag">⇅</span>
+                  </div>
+                </th>
+                <th class="sortable-th" data-field="kakaoProfile" title="클릭하여 카톡 프로필 가나다순 정렬">
+                  <div class="th-content">
+                    <span>카톡 프로필</span>
+                    <span class="sort-arrow" id="sort-icon-kakaoProfile">⇅</span>
+                  </div>
+                </th>
+                <th class="sortable-th" data-field="poe2Account" title="클릭하여 POE2 계정 가나다순 정렬">
+                  <div class="th-content">
+                    <span>POE2 계정</span>
+                    <span class="sort-arrow" id="sort-icon-poe2Account">⇅</span>
+                  </div>
+                </th>
+                <th class="sortable-th" data-field="joinDate" style="width: 110px;" title="클릭하여 가입일자 최신순/과거순 정렬">
+                  <div class="th-content">
+                    <span>가입일</span>
+                    <span class="sort-arrow" id="sort-icon-joinDate">⇅</span>
+                  </div>
+                </th>
+                <th class="sortable-th" data-field="chatCount" style="width: 100px;" title="클릭하여 단톡 대화 횟수 많은순/적은순 정렬">
+                  <div class="th-content" style="justify-content: flex-end;">
+                    <span>단톡횟수</span>
+                    <span class="sort-arrow" id="sort-icon-chatCount">⇅</span>
+                  </div>
+                </th>
+                <th class="sortable-th" data-field="inClan" style="width: 80px;" title="클릭하여 클랜 가입 여부 정렬">
+                  <div class="th-content" style="justify-content: center;">
+                    <span>클랜</span>
+                    <span class="sort-arrow" id="sort-icon-inClan">⇅</span>
+                  </div>
+                </th>
+                <th class="sortable-th" data-field="inKakao" style="width: 80px;" title="클릭하여 카톡 참여 여부 정렬">
+                  <div class="th-content" style="justify-content: center;">
+                    <span>카톡</span>
+                    <span class="sort-arrow" id="sort-icon-inKakao">⇅</span>
+                  </div>
+                </th>
+                <th class="sortable-th" data-field="inDiscord" style="width: 80px;" title="클릭하여 디스코드 참여 여부 정렬">
+                  <div class="th-content" style="justify-content: center;">
+                    <span>디코</span>
+                    <span class="sort-arrow" id="sort-icon-inDiscord">⇅</span>
+                  </div>
+                </th>
+                <th class="sortable-th" data-field="isSpecial" style="width: 80px;" title="클릭하여 특별 회원 여부 정렬">
+                  <div class="th-content" style="justify-content: center;">
+                    <span>특별</span>
+                    <span class="sort-arrow" id="sort-icon-isSpecial">⇅</span>
+                  </div>
+                </th>
+                <th class="sortable-th" data-field="warning" style="width: 80px;" title="클릭하여 경고 대상자 정렬">
+                  <div class="th-content" style="justify-content: center;">
+                    <span>경고</span>
+                    <span class="sort-arrow" id="sort-icon-warning">⇅</span>
+                  </div>
+                </th>
+                <th class="sortable-th" data-field="notes" title="클릭하여 비고 가나다순 정렬">
+                  <div class="th-content">
+                    <span>비고</span>
+                    <span class="sort-arrow" id="sort-icon-notes">⇅</span>
+                  </div>
+                </th>
                 <th style="width: 130px; text-align: center;">관리</th>
               </tr>
             </thead>
